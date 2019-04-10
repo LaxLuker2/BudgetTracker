@@ -322,3 +322,15 @@ h3.whatIsDomoSkill {
 @media only screen and (min-height: 700px) {
   #ads {
     position: fixed; } }
+
+/* brand logo */
+.mainImg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 409.275px;
+  height: 123.3px; }
+
+/* login/logout/sign up float right */
+.loginBtns {
+  float: right; }
