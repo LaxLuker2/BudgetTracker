@@ -1,11 +1,11 @@
 {
-  "name": "Logins",
+  "name": "BudgetTracker",
   "version": "1.0.0",
   "engines": {
     "node": "10.14.1",
     "npm": "6.4.1"
   },
-  "description": "A Simple Login Example using Node.js, Mongo and Redis",
+  "description": "A Simple Budget Tracker app",
   "main": "./server/app.js",
   "scripts": {
     "buildLoginBundle": "babel ./client/login ./client/helper --presets react --out-file ./hosted/loginBundle.js",
@@ -16,7 +16,8 @@
     "nodemon": "nodemon --watch ./server ./server/app.js",
     "start": "node ./server/app.js",
     "pretest": "eslint ./server --fix",
-    "test": "echo \"Tests complete\""
+    "test": "echo \"Tests complete\"",
+    "scss": "node-sass -o hosted styles/"
   },
   "keywords": [
     "Node",
@@ -24,7 +25,7 @@
     "Redis",
     "Login"
   ],
-  "author": "Cody Van De Mark",
+  "author": "Luke Schwarting",
   "license": "Apache 2.0",
   "dependencies": {
     "body-parser": "^1.15.0",
@@ -47,6 +48,7 @@
     "eslint": "^3.0.0",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.10.1",
+    "node-sass": "^4.11.0",
     "nodemon": "^1.11.0"
   }
 }
