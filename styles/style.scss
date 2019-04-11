@@ -103,10 +103,10 @@ nav:nth-child(1) {
 }
 
 .mainForm {
-  height: 300px;
-  width: 350px;
+  // height: 300px;
+  // width: 350px;
   margin: 0 auto;
-  padding-top: 350px;
+  // padding-top: 350px;
   font-size: 1.2em;
 }
 
@@ -128,14 +128,21 @@ nav:nth-child(1) {
   text-align: center;
   margin: 0 auto;
   margin-top: 14px;
-  font-size: 1.2em;
+  // font-size: 1.2em;
   width: 100px;
   background-color: #55acee;
   border-radius: 2px;
   border-color: #66acee;
-  padding: 3px 0px;
+  // padding: 3px 0px;
   color: white;
   text-decoration: none;
+  /* for new form V */
+  padding-right: 41px;
+  padding-left: 41px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 200px;
+  font-style: bold;
 }
 
 .formSubmit:link,
@@ -150,21 +157,21 @@ nav:nth-child(1) {
   background-color: #338acc;
 }
 
-#user,
-#pass,
-#pass2 {
-  text-align: center;
-  font-size: 1.1em;
-  width: 180px;
-  border-radius: 6px;
-}
+// #user,
+// #pass,
+// #pass2 {
+//   text-align: center;
+//   font-size: 1.1em;
+//   width: 180px;
+//   border-radius: 6px;
+// }
 
-#user:focus,
-#pass:focus,
-#pass2:focus {
-  outline: none;
-  box-shadow: 0px 0px 1px 1px #55acee;
-}
+// #user:focus,
+// #pass:focus,
+// #pass2:focus {
+//   outline: none;
+//   box-shadow: 0px 0px 1px 1px #55acee;
+// }
 
 #domoMessage {
   display: none;
@@ -389,4 +396,140 @@ h3.whatIsDomoSkill {
 /* login/logout/sign up float right */
 .loginBtns {
   float: right;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  height: 100vh;
+}
+
+// a {
+//   color: #92badd;
+//   display: inline-block;
+//   text-decoration: none;
+//   font-weight: 400;
+// }
+
+h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display: inline-block;
+  margin: 40px 8px 10px 8px;
+  color: #cccccc;
+}
+
+/* login Form */
+
+/* STRUCTURE */
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px;
+}
+
+#formContent {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  padding: 0px;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* FORM TYPOGRAPHY*/
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  background-color: #56baed;
+  border: none;
+  color: white;
+  // padding: 15px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  // font-size: 16px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 20px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+  background-color: #39ace7;
+}
+
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active {
+  -moz-transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+input[type="text"],
+input[type="password"] {
+  background-color: #ececec;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px;
+  // width: 85%;
+  border: 2px solid #ececec;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  // display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #5fbae9;
+}
+
+input[type="text"]:placeholder,
+input[type="password"]:placeholder {
+  color: #cccccc;
+}
+
+.logInput {
+  width: 85%;
+  display: block;
 }
