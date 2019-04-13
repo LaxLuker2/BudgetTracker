@@ -27,13 +27,13 @@
 //   return false;
 // };
 
-var handleRent = function handleRent(e) {
+var handleFinances = function handleFinances(e) {
   e.preventDefault();
 
   $("#domoMessage").animate({ width: "hide" }, 350);
 
-  if ($("#usersRent").val() == "") {
-    handleError("Please enter your monthly rent!");
+  if ($("#typeOfBill").val() == "" || $("#amount").val() == "" || $("#paymentDateDropDown").val() == "") {
+    handleError("Please enter your the type, the amount, and select a correct payment date");
     return false;
   }
 
@@ -64,7 +64,7 @@ var RentForm = function RentForm(props) {
     "form",
     {
       id: "rentForm",
-      onSubmit: handleRent,
+      onSubmit: handleFinances,
       name: "rentForm",
       action: "/maker",
       method: "POST",
@@ -76,21 +76,21 @@ var RentForm = function RentForm(props) {
       "Type: "
     ),
     React.createElement("input", {
-      id: "usersRent",
+      id: "typeOfBill",
       type: "text",
       name: "rent",
       placeholder: "Rent or Salary"
     }),
     React.createElement(
       "label",
-      { htmlFor: "wage" },
+      { htmlFor: "amount" },
       "Amount: "
     ),
-    React.createElement("input", { id: "amount", type: "number", name: "salary", placeholder: "Amount" }),
+    React.createElement("input", { id: "amount", type: "number", name: "amount", placeholder: "Amount" }),
     React.createElement(
       "select",
       {
-        id: "myddl",
+        id: "paymentDateDropDown",
         className: "btn btn-secondary dropdown",
         onchange: "onDropDownClick()"
       },
@@ -117,62 +117,6 @@ var RentForm = function RentForm(props) {
     ),
     React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
     React.createElement("input", { className: "btn rentSubmit", type: "submit", value: "Submit Bill" })
-  );
-};
-
-//react JSX for add domo form
-var WageForm = function WageForm(props) {
-  return React.createElement(
-    "form",
-    {
-      id: "domoForm",
-      onSubmit: handleRent,
-      name: "domoForm",
-      action: "/maker",
-      method: "POST",
-      className: "domoForm"
-    },
-    React.createElement(
-      "label",
-      { htmlFor: "wage" },
-      "Salary: "
-    ),
-    React.createElement("input", {
-      id: "usersSalary",
-      type: "text",
-      name: "salary",
-      placeholder: "Salary or Wage per Year"
-    }),
-    React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-    React.createElement("input", { className: "wageSubmit", type: "submit", value: "Submit Wage" })
-  );
-};
-
-//react JSX for add domo form
-var ExpenseForm = function ExpenseForm(props) {
-  return React.createElement(
-    "form",
-    {
-      id: "domoForm",
-      onSubmit: handleRent,
-      name: "domoForm",
-      action: "/maker",
-      method: "POST",
-      className: "domoForm"
-    },
-    React.createElement(
-      "label",
-      { htmlFor: "expenses" },
-      "Expenses: "
-    ),
-    React.createElement("input", {
-      id: "usersExpenses",
-      type: "text",
-      name: "rent",
-      placeholder: "Expenses"
-    }),
-    React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-    React.createElement("input", { className: "expensesSubmit", type: "submit", value: "Submit Expenses" })
   );
 };
 
@@ -242,24 +186,74 @@ var FinanceList = function FinanceList(props) {
     );
   }
 
-  //else use map to create UI for each domo stored
-  //every domo will generate a domo div and add to domoNodes
+  //find current date
+  var newD = new Date();
+  var isIt = isToday(newD);
+
+  console.log(isIt);
+
+  if (isIt) {
+    //dont want to add header bar with new date
+  } else {}
+    //add new header to seperate
+
+
+    //else use map to create UI for each Finance bill stored
+    //every bill will generate a bill tr and add to domoNodes
   var domoNodes = props.domos.map(function (domo) {
+    // return (
+    //   <div key={domo._id} className="domo">
+    //     {/* <img
+    //       src="/assets/img/domoface.jpeg"
+    //       alt="domo face"
+    //       className="domoFace"
+    //     /> */}
+    //     <h3 className="domoName">Rent: {domo.rent}</h3>
+    //   </div>
+    // );
     return React.createElement(
-      "div",
-      { key: domo._id, className: "domo" },
+      "tr",
+      { key: domo._id },
       React.createElement(
-        "h3",
-        { className: "domoName" },
-        "Rent: ",
+        "td",
+        null,
         domo.rent
+      ),
+      React.createElement(
+        "td",
+        null,
+        domo.amount
       )
     );
   });
   //render out a domoList with our domoNodes array
+  // return <div className="domoList">{domoNodes}</div>;
   return React.createElement(
-    "div",
-    { className: "domoList" },
+    "table",
+    null,
+    React.createElement(
+      "tr",
+      null,
+      React.createElement(
+        "th",
+        { colspan: "2" },
+        formateDate(newD)
+      )
+    ),
+    React.createElement(
+      "tr",
+      null,
+      React.createElement(
+        "th",
+        null,
+        "Type"
+      ),
+      React.createElement(
+        "th",
+        null,
+        "Amount"
+      )
+    ),
     domoNodes
   );
 };
@@ -323,6 +317,16 @@ $(document).ready(function () {
 var isToday = function isToday(someDate) {
   var today = new Date();
   return someDate.getDate() == today.getDate() && someDate.getMonth() == today.getMonth() && someDate.getFullYear() == today.getFullYear();
+};
+
+//format Date  https://stackoverflow.com/questions/3552461/how-to-format-a-javascript-date
+var formateDate = function formateDate(someDate) {
+  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  var day = someDate.getDate();
+  var month = months[someDate.getMonth()];
+
+  return month + " " + day;
 };
 
 //setting the date

@@ -25,13 +25,19 @@
 //   return false;
 // };
 
-const handleRent = e => {
+const handleFinances = e => {
   e.preventDefault();
 
   $("#domoMessage").animate({ width: "hide" }, 350);
 
-  if ($("#usersRent").val() == "") {
-    handleError("Please enter your monthly rent!");
+  if (
+    $("#typeOfBill").val() == "" ||
+    $("#amount").val() == "" ||
+    $("#paymentDateDropDown").val() == ""
+  ) {
+    handleError(
+      "Please enter your the type, the amount, and select a correct payment date"
+    );
     return false;
   }
 
@@ -66,7 +72,7 @@ const RentForm = props => {
   return (
     <form
       id="rentForm"
-      onSubmit={handleRent}
+      onSubmit={handleFinances}
       name="rentForm"
       action="/maker"
       method="POST"
@@ -74,15 +80,15 @@ const RentForm = props => {
     >
       <label htmlFor="rent">Type: </label>
       <input
-        id="usersRent"
+        id="typeOfBill"
         type="text"
         name="rent"
         placeholder="Rent or Salary"
       />
-      <label htmlFor="wage">Amount: </label>
-      <input id="amount" type="number" name="salary" placeholder="Amount" />
+      <label htmlFor="amount">Amount: </label>
+      <input id="amount" type="number" name="amount" placeholder="Amount" />
       <select
-        id="myddl"
+        id="paymentDateDropDown"
         className="btn btn-secondary dropdown"
         onchange="onDropDownClick()"
       >
@@ -93,54 +99,6 @@ const RentForm = props => {
       </select>
       <input type="hidden" name="_csrf" value={props.csrf} />
       <input className="btn rentSubmit" type="submit" value="Submit Bill" />
-    </form>
-  );
-};
-
-//react JSX for add domo form
-const WageForm = props => {
-  return (
-    <form
-      id="domoForm"
-      onSubmit={handleRent}
-      name="domoForm"
-      action="/maker"
-      method="POST"
-      className="domoForm"
-    >
-      <label htmlFor="wage">Salary: </label>
-      <input
-        id="usersSalary"
-        type="text"
-        name="salary"
-        placeholder="Salary or Wage per Year"
-      />
-      <input type="hidden" name="_csrf" value={props.csrf} />
-      <input className="wageSubmit" type="submit" value="Submit Wage" />
-    </form>
-  );
-};
-
-//react JSX for add domo form
-const ExpenseForm = props => {
-  return (
-    <form
-      id="domoForm"
-      onSubmit={handleRent}
-      name="domoForm"
-      action="/maker"
-      method="POST"
-      className="domoForm"
-    >
-      <label htmlFor="expenses">Expenses: </label>
-      <input
-        id="usersExpenses"
-        type="text"
-        name="rent"
-        placeholder="Expenses"
-      />
-      <input type="hidden" name="_csrf" value={props.csrf} />
-      <input className="expensesSubmit" type="submit" value="Submit Expenses" />
     </form>
   );
 };
@@ -207,22 +165,52 @@ const FinanceList = function(props) {
     );
   }
 
-  //else use map to create UI for each domo stored
-  //every domo will generate a domo div and add to domoNodes
+  //find current date
+  let newD = new Date();
+  let isIt = isToday(newD);
+
+  console.log(isIt);
+
+  if (isIt) {
+    //dont want to add header bar with new date
+  } else {
+    //add new header to seperate
+  }
+
+  //else use map to create UI for each Finance bill stored
+  //every bill will generate a bill tr and add to domoNodes
   const domoNodes = props.domos.map(function(domo) {
+    // return (
+    //   <div key={domo._id} className="domo">
+    //     {/* <img
+    //       src="/assets/img/domoface.jpeg"
+    //       alt="domo face"
+    //       className="domoFace"
+    //     /> */}
+    //     <h3 className="domoName">Rent: {domo.rent}</h3>
+    //   </div>
+    // );
     return (
-      <div key={domo._id} className="domo">
-        {/* <img
-          src="/assets/img/domoface.jpeg"
-          alt="domo face"
-          className="domoFace"
-        /> */}
-        <h3 className="domoName">Rent: {domo.rent}</h3>
-      </div>
+      <tr key={domo._id}>
+        <td>{domo.rent}</td>
+        <td>{domo.amount}</td>
+      </tr>
     );
   });
   //render out a domoList with our domoNodes array
-  return <div className="domoList">{domoNodes}</div>;
+  // return <div className="domoList">{domoNodes}</div>;
+  return (
+    <table>
+      <tr>
+        <th colspan="2">{formateDate(newD)}</th>
+      </tr>
+      <tr>
+        <th>Type</th>
+        <th>Amount</th>
+      </tr>
+      {domoNodes}
+    </table>
+  );
 };
 
 //grab domos from server and render a Domolist
@@ -291,6 +279,29 @@ const isToday = someDate => {
     someDate.getMonth() == today.getMonth() &&
     someDate.getFullYear() == today.getFullYear()
   );
+};
+
+//format Date  https://stackoverflow.com/questions/3552461/how-to-format-a-javascript-date
+const formateDate = someDate => {
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+
+  let day = someDate.getDate();
+  let month = months[someDate.getMonth()];
+
+  return month + " " + day;
 };
 
 //setting the date

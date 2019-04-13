@@ -51,8 +51,7 @@ const makeFin = (req, res) => {
 
   const financeData = {
     rent: req.body.rent,
-    wage: 22,
-    expenses: 320,
+    amount: req.body.amount,
     owner: req.session.account._id
   };
 

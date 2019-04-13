@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
-const _ = require('underscore');
+const _ = require("underscore");
 
 let FinanceModel = {};
 
@@ -11,53 +11,46 @@ const setName = name => _.escape(name).trim();
 
 const FinanceSchema = new mongoose.Schema({
   rent: {
-    type: Number,
+    type: String,
     required: true,
     trim: true,
-    set: setName,
+    set: setName
   },
 
-  wage: {
+  amount: {
     type: Number,
     min: 0,
-    required: true,
-  },
-
-  expenses: {
-    type: Number,
-    required: true,
-    trim: true,
+    required: true
   },
 
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
-    ref: 'Account',
+    ref: "Account"
   },
 
   createdData: {
     type: Date,
-    default: Date.now,
-  },
+    default: Date.now
+  }
 });
 
 FinanceSchema.statics.toAPI = doc => ({
   rent: doc.rent,
-  wage: doc.wage,
-  expenses: doc.expenses,
+  amount: doc.amount
 });
 
 FinanceSchema.statics.findByOwner = (ownerId, callback) => {
   const search = {
-    owner: convertId(ownerId),
+    owner: convertId(ownerId)
   };
 
   return FinanceModel.find(search)
-    .select('rent wage expenses')
+    .select("rent amount")
     .exec(callback);
 };
 
-FinanceModel = mongoose.model('FinanceTracker', FinanceSchema);
+FinanceModel = mongoose.model("FinanceTracker", FinanceSchema);
 
 module.exports.DomoModel = FinanceModel;
 module.exports.DomoSchema = FinanceSchema;
