@@ -47,19 +47,19 @@ const handleRent = e => {
   return false;
 };
 
-const deleteDomo = e => {
-  e.preventDefault();
+// const deleteDomo = e => {
+//   e.preventDefault();
 
-  $("#domoMessage").animate({ width: "hide" }, 350);
+//   $("#domoMessage").animate({ width: "hide" }, 350);
 
-  console.log("delete all");
+//   console.log("delete all");
 
-  sendAjax("DELETE", $("#deleteDomo").attr("action"), function() {
-    deleteDomosFromServer();
-  });
+//   sendAjax("DELETE", $("#deleteDomo").attr("action"), function() {
+//     deleteDomosFromServer();
+//   });
 
-  return false;
-};
+//   return false;
+// };
 
 //react JSX for add domo form
 const RentForm = props => {
@@ -72,10 +72,27 @@ const RentForm = props => {
       method="POST"
       className="domoForm"
     >
-      <label htmlFor="rent">Rent: </label>
-      <input id="usersRent" type="text" name="rent" placeholder="Rent" />
+      <label htmlFor="rent">Type: </label>
+      <input
+        id="usersRent"
+        type="text"
+        name="rent"
+        placeholder="Rent or Salary"
+      />
+      <label htmlFor="wage">Amount: </label>
+      <input id="amount" type="number" name="salary" placeholder="Amount" />
+      <select
+        id="myddl"
+        className="btn btn-secondary dropdown"
+        onchange="onDropDownClick()"
+      >
+        <option value="">Payment Date</option>
+        <option value="day">Day</option>
+        <option value="month">Month</option>
+        <option value="year">Year</option>
+      </select>
       <input type="hidden" name="_csrf" value={props.csrf} />
-      <input className="rentSubmit" type="submit" value="Submit Rent" />
+      <input className="btn rentSubmit" type="submit" value="Submit Bill" />
     </form>
   );
 };
@@ -243,11 +260,11 @@ const setup = function(csrf) {
   // });
 
   ReactDOM.render(<RentForm csrf={csrf} />, document.querySelector("#rent"));
-  ReactDOM.render(<WageForm csrf={csrf} />, document.querySelector("#wage"));
-  ReactDOM.render(
-    <ExpenseForm csrf={csrf} />,
-    document.querySelector("#expenses")
-  );
+  // ReactDOM.render(<WageForm csrf={csrf} />, document.querySelector("#wage"));
+  // ReactDOM.render(
+  //   <ExpenseForm csrf={csrf} />,
+  //   document.querySelector("#expenses")
+  // );
 
   ReactDOM.render(<FinanceList domos={[]} />, document.querySelector("#domos"));
 
@@ -265,3 +282,28 @@ const getToken = () => {
 $(document).ready(function() {
   getToken();
 });
+
+//check date is today or not
+const isToday = someDate => {
+  const today = new Date();
+  return (
+    someDate.getDate() == today.getDate() &&
+    someDate.getMonth() == today.getMonth() &&
+    someDate.getFullYear() == today.getFullYear()
+  );
+};
+
+//setting the date
+const todaysDate = () => {
+  const newDate = new Date();
+  if (isToday(newDate)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+//get value of drop down
+const onDropDownClick = () => {
+  alert($("#myddl").val());
+};

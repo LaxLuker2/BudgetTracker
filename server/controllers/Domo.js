@@ -1,4 +1,4 @@
-const models = require('../models');
+const models = require("../models");
 
 const Domo = models.Domo;
 
@@ -7,9 +7,9 @@ const makerPage = (req, res) => {
   Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
       console.log(err);
-      return res.status(400).json({ error: 'An error occured' });
+      return res.status(400).json({ error: "An error occured" });
     }
-    return res.render('app', { csrfToken: req.csrfToken(), domos: docs });
+    return res.render("app", { csrfToken: req.csrfToken(), domos: docs });
   });
 };
 
@@ -46,14 +46,14 @@ const makerPage = (req, res) => {
 
 const makeFin = (req, res) => {
   if (!req.body.rent) {
-    return res.status(400).json({ error: 'rent required' });
+    return res.status(400).json({ error: "rent required" });
   }
 
   const financeData = {
     rent: req.body.rent,
     wage: 22,
     expenses: 320,
-    owner: req.session.account._id,
+    owner: req.session.account._id
   };
 
   console.log(financeData);
@@ -62,14 +62,14 @@ const makeFin = (req, res) => {
 
   const financePromise = newFinance.save();
 
-  financePromise.then(() => res.json({ redirect: '/maker' }));
+  financePromise.then(() => res.json({ redirect: "/maker" }));
 
   financePromise.catch(err => {
     console.log(err);
     if (err.code === 11000) {
-      return res.status(400).json({ error: 'That already exists.' });
+      return res.status(400).json({ error: "That already exists." });
     }
-    return res.status(400).json({ error: 'An error occurred' });
+    return res.status(400).json({ error: "An error occurred" });
   });
 
   return financePromise;
@@ -85,7 +85,7 @@ const getDomos = (request, response) => {
   return Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
       console.log(err);
-      return res.status(400).json({ error: 'An error occured' });
+      return res.status(400).json({ error: "An error occured" });
     }
 
     return res.json({ domos: docs });

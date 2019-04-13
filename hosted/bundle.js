@@ -44,19 +44,19 @@ var handleRent = function handleRent(e) {
   return false;
 };
 
-var deleteDomo = function deleteDomo(e) {
-  e.preventDefault();
+// const deleteDomo = e => {
+//   e.preventDefault();
 
-  $("#domoMessage").animate({ width: "hide" }, 350);
+//   $("#domoMessage").animate({ width: "hide" }, 350);
 
-  console.log("delete all");
+//   console.log("delete all");
 
-  sendAjax("DELETE", $("#deleteDomo").attr("action"), function () {
-    deleteDomosFromServer();
-  });
+//   sendAjax("DELETE", $("#deleteDomo").attr("action"), function() {
+//     deleteDomosFromServer();
+//   });
 
-  return false;
-};
+//   return false;
+// };
 
 //react JSX for add domo form
 var RentForm = function RentForm(props) {
@@ -73,11 +73,50 @@ var RentForm = function RentForm(props) {
     React.createElement(
       "label",
       { htmlFor: "rent" },
-      "Rent: "
+      "Type: "
     ),
-    React.createElement("input", { id: "usersRent", type: "text", name: "rent", placeholder: "Rent" }),
+    React.createElement("input", {
+      id: "usersRent",
+      type: "text",
+      name: "rent",
+      placeholder: "Rent or Salary"
+    }),
+    React.createElement(
+      "label",
+      { htmlFor: "wage" },
+      "Amount: "
+    ),
+    React.createElement("input", { id: "amount", type: "number", name: "salary", placeholder: "Amount" }),
+    React.createElement(
+      "select",
+      {
+        id: "myddl",
+        className: "btn btn-secondary dropdown",
+        onchange: "onDropDownClick()"
+      },
+      React.createElement(
+        "option",
+        { value: "" },
+        "Payment Date"
+      ),
+      React.createElement(
+        "option",
+        { value: "day" },
+        "Day"
+      ),
+      React.createElement(
+        "option",
+        { value: "month" },
+        "Month"
+      ),
+      React.createElement(
+        "option",
+        { value: "year" },
+        "Year"
+      )
+    ),
     React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-    React.createElement("input", { className: "rentSubmit", type: "submit", value: "Submit Rent" })
+    React.createElement("input", { className: "btn rentSubmit", type: "submit", value: "Submit Bill" })
   );
 };
 
@@ -257,8 +296,11 @@ var setup = function setup(csrf) {
   // });
 
   ReactDOM.render(React.createElement(RentForm, { csrf: csrf }), document.querySelector("#rent"));
-  ReactDOM.render(React.createElement(WageForm, { csrf: csrf }), document.querySelector("#wage"));
-  ReactDOM.render(React.createElement(ExpenseForm, { csrf: csrf }), document.querySelector("#expenses"));
+  // ReactDOM.render(<WageForm csrf={csrf} />, document.querySelector("#wage"));
+  // ReactDOM.render(
+  //   <ExpenseForm csrf={csrf} />,
+  //   document.querySelector("#expenses")
+  // );
 
   ReactDOM.render(React.createElement(FinanceList, { domos: [] }), document.querySelector("#domos"));
 
@@ -276,6 +318,27 @@ var getToken = function getToken() {
 $(document).ready(function () {
   getToken();
 });
+
+//check date is today or not
+var isToday = function isToday(someDate) {
+  var today = new Date();
+  return someDate.getDate() == today.getDate() && someDate.getMonth() == today.getMonth() && someDate.getFullYear() == today.getFullYear();
+};
+
+//setting the date
+var todaysDate = function todaysDate() {
+  var newDate = new Date();
+  if (isToday(newDate)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+//get value of drop down
+var onDropDownClick = function onDropDownClick() {
+  alert($("#myddl").val());
+};
 "use strict";
 
 var handleError = function handleError(message) {
