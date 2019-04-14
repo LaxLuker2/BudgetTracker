@@ -37,7 +37,8 @@ const FinanceSchema = new mongoose.Schema({
 
 FinanceSchema.statics.toAPI = doc => ({
   rent: doc.rent,
-  amount: doc.amount
+  amount: doc.amount,
+  createdData: doc.createdData
 });
 
 FinanceSchema.statics.findByOwner = (ownerId, callback) => {
@@ -46,7 +47,7 @@ FinanceSchema.statics.findByOwner = (ownerId, callback) => {
   };
 
   return FinanceModel.find(search)
-    .select("rent amount")
+    .select("rent amount createdData")
     .exec(callback);
 };
 

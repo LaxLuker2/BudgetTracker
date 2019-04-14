@@ -188,18 +188,19 @@ var FinanceList = function FinanceList(props) {
 
   //find current date
   var newD = new Date();
-  var isIt = isToday(newD);
+  // let isIt = isToday(newD);
+  var billDate = new Date();
 
-  console.log(isIt);
+  // console.log(isIt);
 
-  if (isIt) {
-    //dont want to add header bar with new date
-  } else {}
-    //add new header to seperate
+  // if (isIt) {
+  //   //dont want to add header bar with new date
+  // } else {
+  //   //add new header to seperate
+  // }
 
-
-    //else use map to create UI for each Finance bill stored
-    //every bill will generate a bill tr and add to domoNodes
+  //else use map to create UI for each Finance bill stored
+  //every bill will generate a bill tr and add to domoNodes
   var domoNodes = props.domos.map(function (domo) {
     // return (
     //   <div key={domo._id} className="domo">
@@ -211,9 +212,15 @@ var FinanceList = function FinanceList(props) {
     //     <h3 className="domoName">Rent: {domo.rent}</h3>
     //   </div>
     // );
+    billDate = domo.createdData;
     return React.createElement(
       "tr",
       { key: domo._id },
+      React.createElement(
+        "td",
+        null,
+        formateDate(domo.createdData)
+      ),
       React.createElement(
         "td",
         null,
@@ -226,6 +233,19 @@ var FinanceList = function FinanceList(props) {
       )
     );
   });
+  console.log(billDate);
+
+  //check if date create is same as current date
+  // let isItSameDay = isToday(billDate);
+
+  // console.log(isItSameDay);
+
+  // if (isItSameDay) {
+  //dont want to add header bar with new date
+  // } else {
+  //add new header to seperate
+  // }
+
   //render out a domoList with our domoNodes array
   // return <div className="domoList">{domoNodes}</div>;
   return React.createElement(
@@ -236,13 +256,9 @@ var FinanceList = function FinanceList(props) {
       null,
       React.createElement(
         "th",
-        { colspan: "2" },
-        formateDate(newD)
-      )
-    ),
-    React.createElement(
-      "tr",
-      null,
+        null,
+        "Date"
+      ),
       React.createElement(
         "th",
         null,
@@ -257,6 +273,52 @@ var FinanceList = function FinanceList(props) {
     domoNodes
   );
 };
+
+// let something;
+// billDate = domo.createdData;
+// console.log(billDate);
+
+// //check if date create is same as current date
+// let isItSameDay = isToday(domo.createdData);
+
+// console.log(isItSameDay);
+
+// if (isItSameDay) {
+//   //dont want to add header bar with new date
+//   something = (
+//     <table id="fin-table">
+//       <tr>
+//         <th colspan="2">{formateDate(domo.createdData)}</th>
+//       </tr>
+//       <tr>
+//         <th>Type</th>
+//         <th>Amount</th>
+//       </tr>
+//       <tr key={domo._id}>
+//         <td>{domo.rent}</td>
+//         <td>{domo.amount}</td>
+//         <td>{domo.createdData}</td>
+//       </tr>
+//     </table>
+//   );
+// } else {
+//   //add new header to seperate
+//   something = (
+//     <table id="fin-table2">
+//       <tr>
+//         <th colspan="2">{formateDate(domo.createdData)}</th>
+//       </tr>
+//       <tr>
+//         <th>Type</th>
+//         <th>Amount</th>
+//       </tr>
+//       <tr key={domo._id}>
+//         <td>{domo.rent}</td>
+//         <td>{domo.amount}</td>
+//         <td>{domo.createdData}</td>
+//       </tr>
+//     </table>
+//   );
 
 //grab domos from server and render a Domolist
 //since async we need to render on success

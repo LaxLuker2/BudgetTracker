@@ -1,29 +1,4 @@
 //make react comps
-// const handleDomo = e => {
-//   e.preventDefault();
-
-//   $("#domoMessage").animate({ width: "hide" }, 350);
-
-//   if (
-//     $("#domoName").val() == "" ||
-//     $("#domoAge").val() == "" ||
-//     $("#domoSkill").val() == ""
-//   ) {
-//     handleError("RAWR! All fields are required");
-//     return false;
-//   }
-
-//   sendAjax(
-//     "POST",
-//     $("#domoForm").attr("action"),
-//     $("#domoForm").serialize(),
-//     function() {
-//       loadDomosFromServer();
-//     }
-//   );
-
-//   return false;
-// };
 
 const handleFinances = e => {
   e.preventDefault();
@@ -52,20 +27,6 @@ const handleFinances = e => {
 
   return false;
 };
-
-// const deleteDomo = e => {
-//   e.preventDefault();
-
-//   $("#domoMessage").animate({ width: "hide" }, 350);
-
-//   console.log("delete all");
-
-//   sendAjax("DELETE", $("#deleteDomo").attr("action"), function() {
-//     deleteDomosFromServer();
-//   });
-
-//   return false;
-// };
 
 //react JSX for add domo form
 const RentForm = props => {
@@ -103,56 +64,6 @@ const RentForm = props => {
   );
 };
 
-// //react JSX for add domo form
-// const DomoForm = props => {
-//   return (
-//     <form
-//       id="domoForm"
-//       onSubmit={handleDomo}
-//       name="domoForm"
-//       action="/maker"
-//       method="POST"
-//       className="domoForm"
-//     >
-//       <label htmlFor="name">Rent: </label>
-//       <input id="usersRent" type="text" name="rent" placeholder="Rent" />
-//       <label htmlFor="age">Age: </label>
-//       <input id="domoAge" type="text" name="age" placeholder="Domo Age" />
-//       <label htmlFor="skill">Skill: </label>
-//       <input
-//         id="domoSkill"
-//         type="text"
-//         name="skill"
-//         placeholder="Domos Skill"
-//       />
-//       <input type="hidden" name="_csrf" value={props.csrf} />
-//       <input className="makeDomoSubmit" type="submit" value="Make Domo" />
-//     </form>
-//   );
-// };
-
-// const WhatIsADomoWindow = props => {
-//   return (
-//     <div className="whatIsdomo">
-//       <img
-//         src="/assets/img/domoface.jpeg"
-//         alt="domo face"
-//         className="domoFace"
-//       />
-//       <h3 className="whatIsDomoName">
-//         Name: A Domo gets his name from his very own creator
-//       </h3>
-//       <br />
-//       <h3 className="whatIsDomoAge">Age: A Domo lives and never dies.</h3>
-//       <br />
-//       <h3 className="whatIsDomoSkill">
-//         Skill: Domos are legends that are never forgotton with the skills of
-//         gods!
-//       </h3>
-//     </div>
-//   );
-// };
-
 //determine what to draw
 //can update via Ajax and every time state updates page creates UI and shows
 const FinanceList = function(props) {
@@ -165,17 +76,16 @@ const FinanceList = function(props) {
     );
   }
 
-  //find current date
-  let newD = new Date();
-  let isIt = isToday(newD);
+  //find current date of bill
+  let billDate = new Date();
 
-  console.log(isIt);
+  // console.log(isIt);
 
-  if (isIt) {
-    //dont want to add header bar with new date
-  } else {
-    //add new header to seperate
-  }
+  // if (isIt) {
+  //   //dont want to add header bar with new date
+  // } else {
+  //   //add new header to seperate
+  // }
 
   //else use map to create UI for each Finance bill stored
   //every bill will generate a bill tr and add to domoNodes
@@ -190,21 +100,37 @@ const FinanceList = function(props) {
     //     <h3 className="domoName">Rent: {domo.rent}</h3>
     //   </div>
     // );
+    billDate = domo.createdData;
     return (
       <tr key={domo._id}>
+        <td>{formateDate(domo.createdData)}</td>
         <td>{domo.rent}</td>
         <td>{domo.amount}</td>
       </tr>
     );
   });
+  console.log(billDate);
+
+  //check if date create is same as todays date
+  // let isItSameDay = isToday(billDate);
+
+  // console.log(isItSameDay);
+
+  // if (isItSameDay) {
+  //dont want to add header bar with new date so just add the finace info
+  // } else {
+  //add new header to seperate the old data with new
+  // }
+
   //render out a domoList with our domoNodes array
   // return <div className="domoList">{domoNodes}</div>;
   return (
     <table>
+      {/* <tr>
+        <th colspan="2">{formateDate(billDate)}</th>
+      </tr> */}
       <tr>
-        <th colspan="2">{formateDate(newD)}</th>
-      </tr>
-      <tr>
+        <th>Date</th>
         <th>Type</th>
         <th>Amount</th>
       </tr>
@@ -212,6 +138,52 @@ const FinanceList = function(props) {
     </table>
   );
 };
+
+// let something;
+// billDate = domo.createdData;
+// console.log(billDate);
+
+// //check if date create is same as current date
+// let isItSameDay = isToday(domo.createdData);
+
+// console.log(isItSameDay);
+
+// if (isItSameDay) {
+//   //dont want to add header bar with new date
+//   something = (
+//     <table id="fin-table">
+//       <tr>
+//         <th colspan="2">{formateDate(domo.createdData)}</th>
+//       </tr>
+//       <tr>
+//         <th>Type</th>
+//         <th>Amount</th>
+//       </tr>
+//       <tr key={domo._id}>
+//         <td>{domo.rent}</td>
+//         <td>{domo.amount}</td>
+//         <td>{domo.createdData}</td>
+//       </tr>
+//     </table>
+//   );
+// } else {
+//   //add new header to seperate
+//   something = (
+//     <table id="fin-table2">
+//       <tr>
+//         <th colspan="2">{formateDate(domo.createdData)}</th>
+//       </tr>
+//       <tr>
+//         <th>Type</th>
+//         <th>Amount</th>
+//       </tr>
+//       <tr key={domo._id}>
+//         <td>{domo.rent}</td>
+//         <td>{domo.amount}</td>
+//         <td>{domo.createdData}</td>
+//       </tr>
+//     </table>
+//   );
 
 //grab domos from server and render a Domolist
 //since async we need to render on success
@@ -224,35 +196,8 @@ const loadFinancesFromServer = () => {
   });
 };
 
-//delete all domos
-// const deleteDomosFromServer = () => {
-//   sendAjax("DELETE", "/deleteDomos", null, data => {
-//     ReactDOM.render(<DomoList domos={[]} />, document.querySelector("#domos"));
-//   });
-// };
-
-// const createWhatIsADomoWindow = csrf => {
-//   ReactDOM.render(
-//     <WhatIsADomoWindow csrf={csrf} />,
-//     document.querySelector("#domos")
-//   );
-// };
-
 const setup = function(csrf) {
-  // const whatIsADomoButton = document.querySelector("#whatIsADomoButton");
-
-  // whatIsADomoButton.addEventListener("click", e => {
-  //   e.preventDefault();
-  //   createWhatIsADomoWindow(csrf);
-  //   return false;
-  // });
-
   ReactDOM.render(<RentForm csrf={csrf} />, document.querySelector("#rent"));
-  // ReactDOM.render(<WageForm csrf={csrf} />, document.querySelector("#wage"));
-  // ReactDOM.render(
-  //   <ExpenseForm csrf={csrf} />,
-  //   document.querySelector("#expenses")
-  // );
 
   ReactDOM.render(<FinanceList domos={[]} />, document.querySelector("#domos"));
 
