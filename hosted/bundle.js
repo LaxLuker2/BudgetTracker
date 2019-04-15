@@ -1,39 +1,14 @@
 "use strict";
 
 //make react comps
-// const handleDomo = e => {
-//   e.preventDefault();
-
-//   $("#domoMessage").animate({ width: "hide" }, 350);
-
-//   if (
-//     $("#domoName").val() == "" ||
-//     $("#domoAge").val() == "" ||
-//     $("#domoSkill").val() == ""
-//   ) {
-//     handleError("RAWR! All fields are required");
-//     return false;
-//   }
-
-//   sendAjax(
-//     "POST",
-//     $("#domoForm").attr("action"),
-//     $("#domoForm").serialize(),
-//     function() {
-//       loadDomosFromServer();
-//     }
-//   );
-
-//   return false;
-// };
 
 var handleFinances = function handleFinances(e) {
   e.preventDefault();
 
   $("#domoMessage").animate({ width: "hide" }, 350);
 
-  if ($("#typeOfBill").val() == "" || $("#amount").val() == "" || $("#paymentDateDropDown").val() == "") {
-    handleError("Please enter your the type, the amount, and select a correct payment date");
+  if ($("#typeOfBill").val() == "" || $("#amount").val() == "" || $("#paymentTime").val() == "") {
+    handleError("Please enter your the type, the amount, and select a correct payment time");
     return false;
   }
 
@@ -44,21 +19,7 @@ var handleFinances = function handleFinances(e) {
   return false;
 };
 
-// const deleteDomo = e => {
-//   e.preventDefault();
-
-//   $("#domoMessage").animate({ width: "hide" }, 350);
-
-//   console.log("delete all");
-
-//   sendAjax("DELETE", $("#deleteDomo").attr("action"), function() {
-//     deleteDomosFromServer();
-//   });
-
-//   return false;
-// };
-
-//react JSX for add domo form
+//react JSX for add Finance Bill form
 var RentForm = function RentForm(props) {
   return React.createElement(
     "form",
@@ -90,28 +51,34 @@ var RentForm = function RentForm(props) {
     React.createElement(
       "select",
       {
-        id: "paymentDateDropDown",
+        id: "paymentTime",
+        name: "paymentTime",
         className: "btn btn-secondary dropdown",
         onchange: "onDropDownClick()"
       },
       React.createElement(
         "option",
         { value: "" },
-        "Payment Date"
+        "Payment Time"
       ),
       React.createElement(
         "option",
-        { value: "day" },
+        { value: "Day" },
         "Day"
       ),
       React.createElement(
         "option",
-        { value: "month" },
+        { value: "Week" },
+        "Week"
+      ),
+      React.createElement(
+        "option",
+        { value: "Month" },
         "Month"
       ),
       React.createElement(
         "option",
-        { value: "year" },
+        { value: "Year" },
         "Year"
       )
     ),
@@ -119,56 +86,6 @@ var RentForm = function RentForm(props) {
     React.createElement("input", { className: "btn rentSubmit", type: "submit", value: "Submit Bill" })
   );
 };
-
-// //react JSX for add domo form
-// const DomoForm = props => {
-//   return (
-//     <form
-//       id="domoForm"
-//       onSubmit={handleDomo}
-//       name="domoForm"
-//       action="/maker"
-//       method="POST"
-//       className="domoForm"
-//     >
-//       <label htmlFor="name">Rent: </label>
-//       <input id="usersRent" type="text" name="rent" placeholder="Rent" />
-//       <label htmlFor="age">Age: </label>
-//       <input id="domoAge" type="text" name="age" placeholder="Domo Age" />
-//       <label htmlFor="skill">Skill: </label>
-//       <input
-//         id="domoSkill"
-//         type="text"
-//         name="skill"
-//         placeholder="Domos Skill"
-//       />
-//       <input type="hidden" name="_csrf" value={props.csrf} />
-//       <input className="makeDomoSubmit" type="submit" value="Make Domo" />
-//     </form>
-//   );
-// };
-
-// const WhatIsADomoWindow = props => {
-//   return (
-//     <div className="whatIsdomo">
-//       <img
-//         src="/assets/img/domoface.jpeg"
-//         alt="domo face"
-//         className="domoFace"
-//       />
-//       <h3 className="whatIsDomoName">
-//         Name: A Domo gets his name from his very own creator
-//       </h3>
-//       <br />
-//       <h3 className="whatIsDomoAge">Age: A Domo lives and never dies.</h3>
-//       <br />
-//       <h3 className="whatIsDomoSkill">
-//         Skill: Domos are legends that are never forgotton with the skills of
-//         gods!
-//       </h3>
-//     </div>
-//   );
-// };
 
 //determine what to draw
 //can update via Ajax and every time state updates page creates UI and shows
@@ -186,40 +103,20 @@ var FinanceList = function FinanceList(props) {
     );
   }
 
-  //find current date
-  var newD = new Date();
-  // let isIt = isToday(newD);
-  var billDate = new Date();
-
-  // console.log(isIt);
-
-  // if (isIt) {
-  //   //dont want to add header bar with new date
-  // } else {
-  //   //add new header to seperate
-  // }
+  //find current date of bill
+  // let billDate = new Date();
 
   //else use map to create UI for each Finance bill stored
   //every bill will generate a bill tr and add to domoNodes
   var domoNodes = props.domos.map(function (domo) {
-    // return (
-    //   <div key={domo._id} className="domo">
-    //     {/* <img
-    //       src="/assets/img/domoface.jpeg"
-    //       alt="domo face"
-    //       className="domoFace"
-    //     /> */}
-    //     <h3 className="domoName">Rent: {domo.rent}</h3>
-    //   </div>
-    // );
-    billDate = domo.createdData;
+    // billDate = domo.createdData;
     return React.createElement(
       "tr",
       { key: domo._id },
       React.createElement(
         "td",
         null,
-        formateDate(domo.createdData)
+        domo.createdData
       ),
       React.createElement(
         "td",
@@ -230,50 +127,79 @@ var FinanceList = function FinanceList(props) {
         "td",
         null,
         domo.amount
+      ),
+      React.createElement(
+        "td",
+        null,
+        domo.paymentTime
       )
     );
   });
-  console.log(billDate);
 
-  //check if date create is same as current date
+  // console.log(billDate);
+
+  //check if date create is same as todays date
   // let isItSameDay = isToday(billDate);
 
   // console.log(isItSameDay);
 
   // if (isItSameDay) {
-  //dont want to add header bar with new date
+  //dont want to add header bar with new date so just add the finace info
   // } else {
-  //add new header to seperate
+  //add new header to seperate the old data with new
   // }
 
   //render out a domoList with our domoNodes array
   // return <div className="domoList">{domoNodes}</div>;
   return React.createElement(
-    "table",
+    "div",
     null,
+    React.createElement("img", {
+      className: "mainImg",
+      src: "/assets/img/brand.png",
+      alt: "Budget Tracker"
+    }),
     React.createElement(
-      "tr",
-      null,
+      "table",
+      { className: "table" },
       React.createElement(
-        "th",
-        null,
-        "Date"
+        "thead",
+        { className: "thead-dark" },
+        React.createElement(
+          "tr",
+          null,
+          React.createElement(
+            "th",
+            { scope: "col" },
+            "Date"
+          ),
+          React.createElement(
+            "th",
+            { scope: "col" },
+            "Type"
+          ),
+          React.createElement(
+            "th",
+            { scope: "col" },
+            "Amount"
+          ),
+          React.createElement(
+            "th",
+            { scope: "col" },
+            "Payment Time"
+          )
+        )
       ),
       React.createElement(
-        "th",
+        "tbody",
         null,
-        "Type"
-      ),
-      React.createElement(
-        "th",
-        null,
-        "Amount"
+        domoNodes
       )
-    ),
-    domoNodes
+    )
   );
 };
 
+//using for project 3
 // let something;
 // billDate = domo.createdData;
 // console.log(billDate);
@@ -328,35 +254,9 @@ var loadFinancesFromServer = function loadFinancesFromServer() {
   });
 };
 
-//delete all domos
-// const deleteDomosFromServer = () => {
-//   sendAjax("DELETE", "/deleteDomos", null, data => {
-//     ReactDOM.render(<DomoList domos={[]} />, document.querySelector("#domos"));
-//   });
-// };
-
-// const createWhatIsADomoWindow = csrf => {
-//   ReactDOM.render(
-//     <WhatIsADomoWindow csrf={csrf} />,
-//     document.querySelector("#domos")
-//   );
-// };
-
+//setup the render
 var setup = function setup(csrf) {
-  // const whatIsADomoButton = document.querySelector("#whatIsADomoButton");
-
-  // whatIsADomoButton.addEventListener("click", e => {
-  //   e.preventDefault();
-  //   createWhatIsADomoWindow(csrf);
-  //   return false;
-  // });
-
   ReactDOM.render(React.createElement(RentForm, { csrf: csrf }), document.querySelector("#rent"));
-  // ReactDOM.render(<WageForm csrf={csrf} />, document.querySelector("#wage"));
-  // ReactDOM.render(
-  //   <ExpenseForm csrf={csrf} />,
-  //   document.querySelector("#expenses")
-  // );
 
   ReactDOM.render(React.createElement(FinanceList, { domos: [] }), document.querySelector("#domos"));
 
@@ -399,11 +299,6 @@ var todaysDate = function todaysDate() {
   } else {
     return false;
   }
-};
-
-//get value of drop down
-var onDropDownClick = function onDropDownClick() {
-  alert($("#myddl").val());
 };
 "use strict";
 

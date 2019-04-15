@@ -8,10 +8,10 @@ const handleFinances = e => {
   if (
     $("#typeOfBill").val() == "" ||
     $("#amount").val() == "" ||
-    $("#paymentDateDropDown").val() == ""
+    $("#paymentTime").val() == ""
   ) {
     handleError(
-      "Please enter your the type, the amount, and select a correct payment date"
+      "Please enter your the type, the amount, and select a correct payment time"
     );
     return false;
   }
@@ -28,7 +28,7 @@ const handleFinances = e => {
   return false;
 };
 
-//react JSX for add domo form
+//react JSX for add Finance Bill form
 const RentForm = props => {
   return (
     <form
@@ -49,14 +49,16 @@ const RentForm = props => {
       <label htmlFor="amount">Amount: </label>
       <input id="amount" type="number" name="amount" placeholder="Amount" />
       <select
-        id="paymentDateDropDown"
+        id="paymentTime"
+        name="paymentTime"
         className="btn btn-secondary dropdown"
         onchange="onDropDownClick()"
       >
-        <option value="">Payment Date</option>
-        <option value="day">Day</option>
-        <option value="month">Month</option>
-        <option value="year">Year</option>
+        <option value="">Payment Time</option>
+        <option value="Day">Day</option>
+        <option value="Week">Week</option>
+        <option value="Month">Month</option>
+        <option value="Year">Year</option>
       </select>
       <input type="hidden" name="_csrf" value={props.csrf} />
       <input className="btn rentSubmit" type="submit" value="Submit Bill" />
@@ -77,39 +79,23 @@ const FinanceList = function(props) {
   }
 
   //find current date of bill
-  let billDate = new Date();
-
-  // console.log(isIt);
-
-  // if (isIt) {
-  //   //dont want to add header bar with new date
-  // } else {
-  //   //add new header to seperate
-  // }
+  // let billDate = new Date();
 
   //else use map to create UI for each Finance bill stored
   //every bill will generate a bill tr and add to domoNodes
   const domoNodes = props.domos.map(function(domo) {
-    // return (
-    //   <div key={domo._id} className="domo">
-    //     {/* <img
-    //       src="/assets/img/domoface.jpeg"
-    //       alt="domo face"
-    //       className="domoFace"
-    //     /> */}
-    //     <h3 className="domoName">Rent: {domo.rent}</h3>
-    //   </div>
-    // );
-    billDate = domo.createdData;
+    // billDate = domo.createdData;
     return (
       <tr key={domo._id}>
-        <td>{formateDate(domo.createdData)}</td>
+        <td>{domo.createdData}</td>
         <td>{domo.rent}</td>
         <td>{domo.amount}</td>
+        <td>{domo.paymentTime}</td>
       </tr>
     );
   });
-  console.log(billDate);
+
+  // console.log(billDate);
 
   //check if date create is same as todays date
   // let isItSameDay = isToday(billDate);
@@ -125,20 +111,39 @@ const FinanceList = function(props) {
   //render out a domoList with our domoNodes array
   // return <div className="domoList">{domoNodes}</div>;
   return (
-    <table>
-      {/* <tr>
+    <div>
+      {/* <table>
+         <tr>
         <th colspan="2">{formateDate(billDate)}</th>
-      </tr> */}
-      <tr>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Amount</th>
       </tr>
-      {domoNodes}
-    </table>
+        <tr>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Amount</th>
+        </tr>
+        {domoNodes}
+      </table> */}
+      <img
+        className="mainImg"
+        src="/assets/img/brand.png"
+        alt="Budget Tracker"
+      />
+      <table className="table">
+        <thead className="thead-dark">
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Type</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Payment Time</th>
+          </tr>
+        </thead>
+        <tbody>{domoNodes}</tbody>
+      </table>
+    </div>
   );
 };
 
+//using for project 3
 // let something;
 // billDate = domo.createdData;
 // console.log(billDate);
@@ -196,6 +201,7 @@ const loadFinancesFromServer = () => {
   });
 };
 
+//setup the render
 const setup = function(csrf) {
   ReactDOM.render(<RentForm csrf={csrf} />, document.querySelector("#rent"));
 
@@ -257,9 +263,4 @@ const todaysDate = () => {
   } else {
     return false;
   }
-};
-
-//get value of drop down
-const onDropDownClick = () => {
-  alert($("#myddl").val());
 };

@@ -61,7 +61,8 @@ nav:nth-child(1) {
   margin-left: 10px;
   font-size: 1.2em;
   float: left;
-  color: black; }
+  color: black;
+  font-weight: 500; }
 
 .domoForm input[type="text"],
 .domoForm input[type="number"] {
@@ -171,10 +172,9 @@ nav:nth-child(1) {
 #domos {
   width: 40%;
   min-width: 400px;
-  border: 2px solid #55acee;
   border-radius: 4px;
-  margin: 0 auto;
-  margin-top: 100px; }
+  margin-right: auto;
+  margin-left: 10px; }
 
 .domo {
   display: flex;
@@ -211,107 +211,26 @@ h3.emptyDomo {
   text-align: center;
   margin-top: 18px; }
 
-h3.domoName {
-  float: right;
-  width: 200px;
-  font-weight: bold;
-  padding-left: 65px;
-  font-size: 1.5em; }
-
-h3.domoAge {
-  float: right;
-  text-align: left;
-  width: 100px;
-  font-weight: bold;
-  padding-right: 40px;
-  font-size: 1.5em; }
-
-h3.domoSkill {
-  float: right;
-  text-align: left;
-  width: 100px;
-  font-weight: bold;
-  padding-right: 40px;
-  font-size: 1.5em; }
-
 .domo:first-child {
   margin-top: 10px; }
 
 .domo:last-child {
   margin-bottom: 10px; }
 
-.deleteDomoSubmit {
-  background-color: #f44336;
-  transition: background-color 0.4s ease;
-  display: inline;
-  border-radius: 10px;
-  color: white;
-  text-decoration: none;
-  padding: 10px; }
-
-.deleteDomoSubmit:link,
-.deleteDomoSubmit:visited,
-.deleteDomoSubmit:hover,
-.deleteDomoSubmit:active {
-  color: white; }
-
-.deleteDomoSubmit:hover {
-  transition: background-color 0.4s ease;
-  background-color: #940000; }
-
 .forms {
   display: flex; }
 
-h3.whatIsDomoName {
-  font-weight: bold;
-  padding-left: 65px;
-  font-size: 1.5em;
-  margin-left: 50px; }
+/* ads images*/
+.justAnImage {
+  width: 400px;
+  float: left;
+  padding: 0 20px 20px 0; }
 
-h3.whatIsDomoAge {
-  text-align: left;
-  font-weight: bold;
-  padding-right: 40px;
-  font-size: 1.5em;
-  margin-left: 115px; }
-
-h3.whatIsDomoSkill {
-  text-align: left;
-  font-weight: bold;
-  padding-right: 40px;
-  font-size: 1.5em;
-  margin-left: 115px; }
-
-.whatIsdomo {
-  width: 95%;
-  margin: 0 auto;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  border: 2px solid #55acee;
-  border-radius: 4px;
-  background-color: #55acee;
-  padding: 10px;
-  min-height: 60px;
-  overflow: hidden; }
-
-.adsImg {
-  width: 400px; }
-
-#ad3 {
+#justAnImage3 {
   height: 250px; }
 
-#ads {
-  width: 100vw;
-  /* height: 90px; */
-  /* background: #080808; */
-  bottom: 0px;
-  left: 0px;
-  align-content: center;
-  justify-content: center; }
-
-@media only screen and (min-height: 700px) {
-  #ads {
-    position: fixed; } }
+#justAnImage1 {
+  padding-top: 20px; }
 
 /* brand logo */
 .mainImg {
@@ -437,7 +356,7 @@ h2 {
 
 #rentForm {
   width: 55%;
-  height: 80px;
+  height: 65px;
   margin: auto; }
 
 section#rent {
@@ -486,7 +405,7 @@ section#rent {
   margin-left: auto;
   margin-right: auto; }
 
-#paymentDateDropDown {
+#paymentTime {
   margin-left: 20px; }
 
 .dropdown {
@@ -497,3 +416,7 @@ section#rent {
 .dropdown {
   position: relative;
   display: inline-block; }
+
+/* content div */
+#appContent {
+  display: flex; }

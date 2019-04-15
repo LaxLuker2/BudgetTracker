@@ -9,6 +9,7 @@ let FinanceModel = {};
 const convertId = mongoose.Types.ObjectId;
 const setName = name => _.escape(name).trim();
 
+// rent is the type, amount of $ and payment time is the base format
 const FinanceSchema = new mongoose.Schema({
   rent: {
     type: String,
@@ -20,6 +21,11 @@ const FinanceSchema = new mongoose.Schema({
   amount: {
     type: Number,
     min: 0,
+    required: true
+  },
+
+  paymentTime: {
+    type: String,
     required: true
   },
 
@@ -38,6 +44,7 @@ const FinanceSchema = new mongoose.Schema({
 FinanceSchema.statics.toAPI = doc => ({
   rent: doc.rent,
   amount: doc.amount,
+  paymentTime: doc.paymentTime,
   createdData: doc.createdData
 });
 
@@ -47,7 +54,7 @@ FinanceSchema.statics.findByOwner = (ownerId, callback) => {
   };
 
   return FinanceModel.find(search)
-    .select("rent amount createdData")
+    .select("rent amount paymentTime createdData")
     .exec(callback);
 };
 
