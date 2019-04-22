@@ -122,6 +122,9 @@ nav:nth-child(1) {
   width: 200px;
   font-style: bold; }
 
+.forgotPassword {
+  padding-left: 25px; }
+
 .formSubmit:link,
 .formSubmit:visited,
 .formSubmit:hover,

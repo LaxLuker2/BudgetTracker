@@ -62,6 +62,11 @@ const getDomos = (request, response) => {
   });
 };
 
+const whatIsBTPage = (req, res) => {
+  res.render("whatIsBT", { csrfToken: req.csrfToken() });
+};
+
 module.exports.makerPage = makerPage;
+module.exports.whatIsBTPage = whatIsBTPage;
 module.exports.getDomos = getDomos;
 module.exports.make = makeFin;

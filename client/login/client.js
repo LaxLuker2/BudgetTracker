@@ -4,7 +4,7 @@ const handleLogin = e => {
   $("#domoMessage").animate({ width: "hide" }, 350);
 
   if ($("#user").val() == "" || $("#pass").val() == "") {
-    handleError("RAWR! Username or password is empty");
+    handleError("Come On Man! Username or password is empty");
     return false;
   }
 
@@ -30,12 +30,12 @@ const handleSignup = e => {
     $("#pass").val() == "" ||
     $("#pass2").val() == ""
   ) {
-    handleError("RAWR! All fields are required");
+    handleError("Come On Man! All fields are required");
     return false;
   }
 
   if ($("#pass").val() !== $("#pass2").val()) {
-    handleError("RAWR! Passwords do not match");
+    handleError("Come On Man! Passwords do not match");
     return false;
   }
 
@@ -43,6 +43,35 @@ const handleSignup = e => {
     "POST",
     $("#signupForm").attr("action"),
     $("#signupForm").serialize(),
+    redirect
+  );
+
+  return false;
+};
+
+const handleChangePass = e => {
+  e.preventDefault();
+
+  $("#domoMessage").animate({ width: "hide" }, 350);
+
+  if (
+    $("#user").val() == "" ||
+    $("#pass").val() == "" ||
+    $("#pass2").val() == ""
+  ) {
+    handleError("Come On Man! All fields are required");
+    return false;
+  }
+
+  if ($("#pass").val() !== $("#pass2").val()) {
+    handleError("Come On Man! Passwords do not match");
+    return false;
+  }
+
+  sendAjax(
+    "POST",
+    $("#changePassForm").attr("action"),
+    $("#changePassForm").serialize(),
     redirect
   );
 
@@ -80,6 +109,14 @@ const LoginWindow = props => {
           <input type="hidden" name="_csrf" value={props.csrf} />
           <input className="formSubmit" type="submit" value="Sign In" />
         </form>
+
+        <a
+          id="changePasswordButton"
+          className="forgotPassword"
+          href="/changePass"
+        >
+          Forgot Password?
+        </a>
       </div>
     </div>
   );
@@ -117,6 +154,43 @@ const SignupWindow = props => {
   );
 };
 
+const ChangePasswordWindow = props => {
+  return (
+    <div class="wrapper fadeInDown">
+      <div id="formContent">
+        <form
+          id="changePassForm"
+          name="changePassForm"
+          onSubmit={handleChangePass}
+          action="/changePass"
+          method="POST"
+          className="mainForm"
+        >
+          <br />
+          <label htmlFor="username">Username: </label>
+          <input id="user" type="text" name="username" placeholder="username" />
+          <label htmlFor="pass">New Password: </label>
+          <input
+            id="pass"
+            type="password"
+            name="pass"
+            placeholder="new password"
+          />
+          <label htmlFor="pass2">New Password: </label>
+          <input
+            id="pass2"
+            type="password"
+            name="pass2"
+            placeholder="retype new password"
+          />
+          <input type="hidden" name="_csrf" value={props.csrf} />
+          <input className="formSubmit" type="submit" value="Change Password" />
+        </form>
+      </div>
+    </div>
+  );
+};
+
 //render the pages in react
 const createLoginWindow = csrf => {
   ReactDOM.render(
@@ -128,6 +202,13 @@ const createLoginWindow = csrf => {
 const createSignupWindow = csrf => {
   ReactDOM.render(
     <SignupWindow csrf={csrf} />,
+    document.querySelector("#content")
+  );
+};
+
+const createChangePasswordWindow = csrf => {
+  ReactDOM.render(
+    <ChangePasswordWindow csrf={csrf} />,
     document.querySelector("#content")
   );
 };
@@ -152,6 +233,14 @@ const setup = csrf => {
   });
 
   createLoginWindow(csrf); //default view
+
+  const changePasswordButton = document.querySelector("#changePasswordButton");
+
+  changePasswordButton.addEventListener("click", e => {
+    e.preventDefault();
+    createChangePasswordWindow(csrf);
+    return false;
+  });
 };
 
 //get new CSRF token

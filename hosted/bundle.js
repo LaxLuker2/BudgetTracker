@@ -87,6 +87,35 @@ var RentForm = function RentForm(props) {
   );
 };
 
+var WhatIsBTWindow = function WhatIsBTWindow(props) {
+  return React.createElement(
+    "div",
+    { className: "whatIsBT" },
+    React.createElement("img", { "class": "mainImg", src: "/assets/img/brand.png", alt: "Budget Tracker" }),
+    React.createElement(
+      "section",
+      { id: "content" },
+      React.createElement(
+        "h3",
+        { className: "whatIsDomoName" },
+        "Purpose: The purpose of Budget Tracker is for you to enter your information on how your spending your money on bills, or items you pay for like tickets, a tv, snowmobile, etc and know how much you are spending."
+      ),
+      React.createElement("br", null),
+      React.createElement(
+        "h3",
+        { className: "whatIsDomoAge" },
+        "This allows you to track your financies if you can spend a certain amount of money on an event or tickets or what not today and be financially stable later. Allowing you the consumer to know and track your money that you have worked so hard to earn and plan correctly for the future while living and enjoying life today!"
+      ),
+      React.createElement("br", null),
+      React.createElement(
+        "h3",
+        { className: "whatIsDomoSkill" },
+        "All your entered information is secured and protected so that only YOU see your information! \xA9BudgetTracker"
+      )
+    )
+  );
+};
+
 //determine what to draw
 //can update via Ajax and every time state updates page creates UI and shows
 var FinanceList = function FinanceList(props) {
@@ -254,8 +283,20 @@ var loadFinancesFromServer = function loadFinancesFromServer() {
   });
 };
 
+var createWhatIsBTWindow = function createWhatIsBTWindow(csrf) {
+  ReactDOM.render(React.createElement(WhatIsBTWindow, { csrf: csrf }), document.querySelector("#domos"));
+};
+
 //setup the render
 var setup = function setup(csrf) {
+  //what is Budget Tracker Window
+  var whatIsBTButton = document.querySelector("#whatIsBTButton");
+  whatIsBTButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    createWhatIsBTWindow(csrf);
+    return false;
+  });
+
   ReactDOM.render(React.createElement(RentForm, { csrf: csrf }), document.querySelector("#rent"));
 
   ReactDOM.render(React.createElement(FinanceList, { domos: [] }), document.querySelector("#domos"));

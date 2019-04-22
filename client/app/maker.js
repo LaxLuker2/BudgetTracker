@@ -66,6 +66,35 @@ const RentForm = props => {
   );
 };
 
+const WhatIsBTWindow = props => {
+  return (
+    <div className="whatIsBT">
+      <img class="mainImg" src="/assets/img/brand.png" alt="Budget Tracker" />
+      <section id="content">
+        <h3 className="whatIsDomoName">
+          Purpose: The purpose of Budget Tracker is for you to enter your
+          information on how your spending your money on bills, or items you pay
+          for like tickets, a tv, snowmobile, etc and know how much you are
+          spending.
+        </h3>
+        <br />
+        <h3 className="whatIsDomoAge">
+          This allows you to track your financies if you can spend a certain
+          amount of money on an event or tickets or what not today and be
+          financially stable later. Allowing you the consumer to know and track
+          your money that you have worked so hard to earn and plan correctly for
+          the future while living and enjoying life today!
+        </h3>
+        <br />
+        <h3 className="whatIsDomoSkill">
+          All your entered information is secured and protected so that only YOU
+          see your information! &copy;BudgetTracker
+        </h3>
+      </section>
+    </div>
+  );
+};
+
 //determine what to draw
 //can update via Ajax and every time state updates page creates UI and shows
 const FinanceList = function(props) {
@@ -201,8 +230,23 @@ const loadFinancesFromServer = () => {
   });
 };
 
+const createWhatIsBTWindow = csrf => {
+  ReactDOM.render(
+    <WhatIsBTWindow csrf={csrf} />,
+    document.querySelector("#domos")
+  );
+};
+
 //setup the render
 const setup = function(csrf) {
+  //what is Budget Tracker Window
+  const whatIsBTButton = document.querySelector("#whatIsBTButton");
+  whatIsBTButton.addEventListener("click", e => {
+    e.preventDefault();
+    createWhatIsBTWindow(csrf);
+    return false;
+  });
+
   ReactDOM.render(<RentForm csrf={csrf} />, document.querySelector("#rent"));
 
   ReactDOM.render(<FinanceList domos={[]} />, document.querySelector("#domos"));

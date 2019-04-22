@@ -6,7 +6,7 @@ var handleLogin = function handleLogin(e) {
   $("#domoMessage").animate({ width: "hide" }, 350);
 
   if ($("#user").val() == "" || $("#pass").val() == "") {
-    handleError("RAWR! Username or password is empty");
+    handleError("Come On Man! Username or password is empty");
     return false;
   }
 
@@ -23,16 +23,36 @@ var handleSignup = function handleSignup(e) {
   $("#domoMessage").animate({ width: "hide" }, 350);
 
   if ($("#user").val() == "" || $("#pass").val() == "" || $("#pass2").val() == "") {
-    handleError("RAWR! All fields are required");
+    handleError("Come On Man! All fields are required");
     return false;
   }
 
   if ($("#pass").val() !== $("#pass2").val()) {
-    handleError("RAWR! Passwords do not match");
+    handleError("Come On Man! Passwords do not match");
     return false;
   }
 
   sendAjax("POST", $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
+
+  return false;
+};
+
+var handleChangePass = function handleChangePass(e) {
+  e.preventDefault();
+
+  $("#domoMessage").animate({ width: "hide" }, 350);
+
+  if ($("#user").val() == "" || $("#pass").val() == "" || $("#pass2").val() == "") {
+    handleError("Come On Man! All fields are required");
+    return false;
+  }
+
+  if ($("#pass").val() !== $("#pass2").val()) {
+    handleError("Come On Man! Passwords do not match");
+    return false;
+  }
+
+  sendAjax("POST", $("#changePassForm").attr("action"), $("#changePassForm").serialize(), redirect);
 
   return false;
 };
@@ -70,6 +90,15 @@ var LoginWindow = function LoginWindow(props) {
         }),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
         React.createElement("input", { className: "formSubmit", type: "submit", value: "Sign In" })
+      ),
+      React.createElement(
+        "a",
+        {
+          id: "changePasswordButton",
+          className: "forgotPassword",
+          href: "/changePass"
+        },
+        "Forgot Password?"
       )
     )
   );
@@ -123,6 +152,59 @@ var SignupWindow = function SignupWindow(props) {
   );
 };
 
+var ChangePasswordWindow = function ChangePasswordWindow(props) {
+  return React.createElement(
+    "div",
+    { "class": "wrapper fadeInDown" },
+    React.createElement(
+      "div",
+      { id: "formContent" },
+      React.createElement(
+        "form",
+        {
+          id: "changePassForm",
+          name: "changePassForm",
+          onSubmit: handleChangePass,
+          action: "/changePass",
+          method: "POST",
+          className: "mainForm"
+        },
+        React.createElement("br", null),
+        React.createElement(
+          "label",
+          { htmlFor: "username" },
+          "Username: "
+        ),
+        React.createElement("input", { id: "user", type: "text", name: "username", placeholder: "username" }),
+        React.createElement(
+          "label",
+          { htmlFor: "pass" },
+          "New Password: "
+        ),
+        React.createElement("input", {
+          id: "pass",
+          type: "password",
+          name: "pass",
+          placeholder: "new password"
+        }),
+        React.createElement(
+          "label",
+          { htmlFor: "pass2" },
+          "New Password: "
+        ),
+        React.createElement("input", {
+          id: "pass2",
+          type: "password",
+          name: "pass2",
+          placeholder: "retype new password"
+        }),
+        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+        React.createElement("input", { className: "formSubmit", type: "submit", value: "Change Password" })
+      )
+    )
+  );
+};
+
 //render the pages in react
 var createLoginWindow = function createLoginWindow(csrf) {
   ReactDOM.render(React.createElement(LoginWindow, { csrf: csrf }), document.querySelector("#content"));
@@ -130,6 +212,10 @@ var createLoginWindow = function createLoginWindow(csrf) {
 
 var createSignupWindow = function createSignupWindow(csrf) {
   ReactDOM.render(React.createElement(SignupWindow, { csrf: csrf }), document.querySelector("#content"));
+};
+
+var createChangePasswordWindow = function createChangePasswordWindow(csrf) {
+  ReactDOM.render(React.createElement(ChangePasswordWindow, { csrf: csrf }), document.querySelector("#content"));
 };
 
 //attach events to the page btns
@@ -152,6 +238,14 @@ var setup = function setup(csrf) {
   });
 
   createLoginWindow(csrf); //default view
+
+  var changePasswordButton = document.querySelector("#changePasswordButton");
+
+  changePasswordButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    createChangePasswordWindow(csrf);
+    return false;
+  });
 };
 
 //get new CSRF token
