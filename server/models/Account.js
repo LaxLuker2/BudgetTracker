@@ -82,6 +82,22 @@ AccountModel.findByUsername(username, (err, doc) => {
   });
 });
 
+AccountSchema.statics.findOneAndUpdate = (username, newsalt, newpassword, callback) => {
+  AccountModel.findOneAndUpdate({
+    "username": username
+  },
+  {
+    "salt": newsalt,
+    "password": newpassword,
+  }, (err) => {
+    if (err) {
+      return callback(err);
+    }
+
+    return callback();
+  });
+}
+
 AccountModel = mongoose.model('Account', AccountSchema);
 
 module.exports.AccountModel = AccountModel;

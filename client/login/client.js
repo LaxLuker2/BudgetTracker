@@ -59,12 +59,12 @@ const handleChangePass = e => {
     $("#pass").val() == "" ||
     $("#pass2").val() == ""
   ) {
-    handleError("Come On Man! All fields are required");
+    handleError("Come On, Man! All fields are required");
     return false;
   }
 
   if ($("#pass").val() !== $("#pass2").val()) {
-    handleError("Come On Man! Passwords do not match");
+    handleError("Come On, Man! Passwords do not match");
     return false;
   }
 

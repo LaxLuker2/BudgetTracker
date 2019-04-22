@@ -117,7 +117,7 @@ const changePass = (request, response) => {
       password: hash
     };
 
-    const userAccount = Account.AccountModel.findByUsername(
+    const userAccount1 = Account.AccountModel.findByUsername(
       req.body.username,
       (requ, resp) => {
         resp.salt = accountData.salt;
@@ -125,11 +125,17 @@ const changePass = (request, response) => {
       }
     );
 
-    const newAccount = Account.AccountModel(userAccount);
-    console.log(newAccount);
-    console.log("newAccount");
+    //console.log(userAccount1);
+    //console.log("userAccount1 before");
 
-    const savePromise = newAccount.save();
+    const userAccount = Account.AccountModel.findOneAndUpdate(req.body.username, accountData.salt, accountData.password, () => {
+      return
+    })
+
+    //console.log(userAccount);
+    //console.log("userAccount after");
+
+    const savePromise = userAccount.save();
 
     savePromise.then(() => {
       // attach account data from toAPI since user is signing
