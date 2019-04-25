@@ -238,7 +238,7 @@ var FinanceList = function FinanceList(props) {
           null,
           React.createElement(
             "th",
-            { colspan: "2" },
+            { colspan: "4" },
             date
           )
         )
