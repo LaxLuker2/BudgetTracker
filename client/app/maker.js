@@ -108,15 +108,17 @@ const FinanceList = function(props) {
   }
 
   //find current date of bill
-  // let billDate = new Date();
+  let date = new Date();
 
   //else use map to create UI for each Finance bill stored
   //every bill will generate a bill tr and add to domoNodes
   const domoNodes = props.domos.map(function(domo) {
-    // billDate = domo.createdData;
+    let billDate = new Date(domo.createdData);
+    let formatted = formateDate(billDate);
+    date = formatted;
     return (
       <tr key={domo._id}>
-        <td>{domo.createdData}</td>
+        <td>{formatted}</td>
         <td>{domo.rent}</td>
         <td>{domo.amount}</td>
         <td>{domo.paymentTime}</td>
@@ -141,17 +143,6 @@ const FinanceList = function(props) {
   // return <div className="domoList">{domoNodes}</div>;
   return (
     <div>
-      {/* <table>
-         <tr>
-        <th colspan="2">{formateDate(billDate)}</th>
-      </tr>
-        <tr>
-          <th>Date</th>
-          <th>Type</th>
-          <th>Amount</th>
-        </tr>
-        {domoNodes}
-      </table> */}
       <img
         className="mainImg"
         src="/assets/img/brand.png"
@@ -164,6 +155,14 @@ const FinanceList = function(props) {
             <th scope="col">Type</th>
             <th scope="col">Amount</th>
             <th scope="col">Payment Time</th>
+          </tr>
+        </thead>
+        <tbody>{domoNodes}</tbody>
+      </table>
+      <table className="table">
+        <thead className="thead-light">
+          <tr>
+            <th colspan="4">{date}</th>
           </tr>
         </thead>
         <tbody>{domoNodes}</tbody>

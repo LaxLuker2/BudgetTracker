@@ -99,7 +99,8 @@ var LoginWindow = function LoginWindow(props) {
           href: "/changePass"
         },
         "Forgot Password?"
-      )
+      ),
+      React.createElement("br", null)
     )
   );
 };

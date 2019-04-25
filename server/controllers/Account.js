@@ -117,55 +117,21 @@ const changePass = (request, response) => {
       password: hash
     };
 
-    // const userAccount1 = Account.AccountModel.findByUsername(
-    //   req.body.username,
-    //   (requ, resp) => {
-    //     resp.salt = accountData.salt;
-    //     resp.password = accountData.password;
-    //   }
-    // );
-
-    //console.log(userAccount1);
-    //console.log("userAccount1 before");
-
-    const userAccount = Account.AccountModel.findByUsername(req.body.username, (err, doc) => {
-      if(err){
-        console.log(err);
+    const userAccount = Account.AccountModel.findByUsername(
+      req.body.username,
+      (err, doc) => {
+        if (err) {
+          console.log(err);
+        }
+        doc.password = accountData.password;
+        doc.salt = accountData.salt;
+        // return doc;
+        doc.save();
+        return res.json({
+          redirect: "/login"
+        });
       }
-      doc.password = accountData.password;
-      doc.salt = accountData.salt;
-      // return doc;
-      doc.save()
-      return res.json({
-        redirect: "/login"
-      });
-    })
-
-    //console.log(userAccount);
-    //console.log("userAccount after");
-
-    // const savePromise = userAccount.save();
-
-    // savePromise.then(() => {
-    //   // attach account data from toAPI since user is signing
-    //   // up we need to duplicate the account data in session
-    //   // req.session.account = Account.AccountModel.toAPI(newAccount);
-    //   res.json({
-    //     redirect: "/login"
-    //   });
-    // });
-
-    // savePromise.catch(err => {
-    //   console.log(err);
-
-    //   if (err.code === 11000) {
-    //     return res.status(400).json({ error: "Username already in use." });
-    //   }
-
-    //   return res
-    //     .status(400)
-    //     .json({ error: "An error occured in changing password" });
-    // });
+    );
   });
 };
 

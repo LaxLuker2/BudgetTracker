@@ -117,6 +117,7 @@ const LoginWindow = props => {
         >
           Forgot Password?
         </a>
+        <br />
       </div>
     </div>
   );

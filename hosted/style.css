@@ -101,6 +101,9 @@ nav:nth-child(1) {
   text-align: right;
   font-size: 1.2em; }
 
+#changePassForm .formSubmit {
+  width: 250px; }
+
 .formSubmit {
   transition: background-color 0.4s ease;
   display: block;
@@ -115,15 +118,10 @@ nav:nth-child(1) {
   color: white;
   text-decoration: none;
   /* for new form V */
-  padding-right: 41px;
-  padding-left: 41px;
   padding-top: 15px;
   padding-bottom: 15px;
   width: 200px;
   font-style: bold; }
-
-.forgotPassword {
-  padding-left: 25px; }
 
 .formSubmit:link,
 .formSubmit:visited,
@@ -286,7 +284,8 @@ h2 {
 
 /* FORM TYPOGRAPHY*/
 #loginForm input[type="submit"],
-#signupForm input[type="submit"] {
+#signupForm input[type="submit"],
+#changePassForm input[type="submit"] {
   background-color: #0aa12f;
   border: none;
   color: white;
@@ -306,11 +305,13 @@ h2 {
   transition: all 0.3s ease-in-out; }
 
 #loginForm input[type="submit"]:hover,
-#signupForm input[type="submit"]:hover {
+#signupForm input[type="submit"]:hover,
+#changePassForm input[type="submit"]:hover {
   background-color: #098127; }
 
 #loginForm input[type="submit"]:active,
-#signupForm input[type="submit"]:active {
+#signupForm input[type="submit"]:active,
+#changePassForm input[type="submit"]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
