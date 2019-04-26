@@ -52,7 +52,9 @@ var handleChangePass = function handleChangePass(e) {
     return false;
   }
 
-  sendAjax("POST", $("#changePassForm").attr("action"), $("#changePassForm").serialize(), redirect);
+  sendPassAjax("POST", $("#changePassForm").attr("action"), $("#changePassForm").serialize(), redirect);
+  //look up syntax for handling response
+  //handle the 403 to then point to the singup
 
   return false;
 };
@@ -290,6 +292,23 @@ var sendAjax = function sendAjax(type, action, data, success) {
     error: function error(xhr, status, _error) {
       var messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
+    }
+  });
+};
+
+//create send pass ajax similar to the one above then send a error function to pass
+var sendPassAjax = function sendPassAjax(type, action, data, success) {
+  $.ajax({
+    cache: false,
+    type: type,
+    url: action,
+    data: data,
+    dataType: "json",
+    success: success,
+    error: function error(xhr, status, _error2) {
+      var messageObj = JSON.parse(xhr.responseText);
+      handleError(messageObj.error);
+      window.location = "/";
     }
   });
 };

@@ -68,14 +68,14 @@ const handleChangePass = e => {
     return false;
   }
 
-  sendAjax(
+  sendPassAjax(
     "POST",
     $("#changePassForm").attr("action"),
     $("#changePassForm").serialize(),
-    redirect,
-    //look up syntax for handling response
-    //handle the 403 to then point to the singup
+    redirect
   );
+  //look up syntax for handling response
+  //handle the 403 to then point to the singup
 
   return false;
 };
@@ -115,7 +115,9 @@ const LoginWindow = props => {
         <button
           id="changePasswordButton"
           className="forgotPassword"
-          onClick={() => {getChangePass(props.csrf)}}
+          onClick={() => {
+            getChangePass(props.csrf);
+          }}
         >
           Forgot Password?
         </button>
@@ -194,9 +196,9 @@ const ChangePasswordWindow = props => {
   );
 };
 
-const getChangePass = (csrf) => {
-  createChangePasswordWindow(csrf)
-}
+const getChangePass = csrf => {
+  createChangePasswordWindow(csrf);
+};
 
 //render the pages in react
 const createLoginWindow = csrf => {

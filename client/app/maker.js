@@ -109,7 +109,7 @@ const FinanceList = function(props) {
 
   //find current date of bill
   let date = new Date();
-  
+
   //array of bills dates
   let billsByDate = {};
 
@@ -120,10 +120,10 @@ const FinanceList = function(props) {
     let formatted = formateDate(billDate);
     date = formatted;
 
-    if(billsByDate != formatted){
+    if (billsByDate != formatted) {
       //add element to billsByDate
-      billsByDate[formatted] = []
-    };
+      billsByDate[formatted] = [];
+    }
 
     billsByDate[formatted][domo] = (
       <tr key={domo._id}>

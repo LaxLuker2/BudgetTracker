@@ -148,7 +148,7 @@ var FinanceList = function FinanceList(props) {
     if (billsByDate != formatted) {
       //add element to billsByDate
       billsByDate[formatted] = [];
-    };
+    }
 
     billsByDate[formatted][domo] = React.createElement(
       "tr",
@@ -426,6 +426,23 @@ var sendAjax = function sendAjax(type, action, data, success) {
     error: function error(xhr, status, _error) {
       var messageObj = JSON.parse(xhr.responseText);
       handleError(messageObj.error);
+    }
+  });
+};
+
+//create send pass ajax similar to the one above then send a error function to pass
+var sendPassAjax = function sendPassAjax(type, action, data, success) {
+  $.ajax({
+    cache: false,
+    type: type,
+    url: action,
+    data: data,
+    dataType: "json",
+    success: success,
+    error: function error(xhr, status, _error2) {
+      var messageObj = JSON.parse(xhr.responseText);
+      handleError(messageObj.error);
+      window.location = "/";
     }
   });
 };
