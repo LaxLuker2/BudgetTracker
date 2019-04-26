@@ -92,11 +92,13 @@ var LoginWindow = function LoginWindow(props) {
         React.createElement("input", { className: "formSubmit", type: "submit", value: "Sign In" })
       ),
       React.createElement(
-        "a",
+        "button",
         {
           id: "changePasswordButton",
           className: "forgotPassword",
-          href: "/changePass"
+          onClick: function onClick() {
+            getChangePass(props.csrf);
+          }
         },
         "Forgot Password?"
       ),
@@ -204,6 +206,10 @@ var ChangePasswordWindow = function ChangePasswordWindow(props) {
       )
     )
   );
+};
+
+var getChangePass = function getChangePass(csrf) {
+  createChangePasswordWindow(csrf);
 };
 
 //render the pages in react

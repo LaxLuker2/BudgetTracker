@@ -109,6 +109,9 @@ const FinanceList = function(props) {
 
   //find current date of bill
   let date = new Date();
+  
+  //array of bills dates
+  let billsByDate = {};
 
   //else use map to create UI for each Finance bill stored
   //every bill will generate a bill tr and add to domoNodes
@@ -116,6 +119,24 @@ const FinanceList = function(props) {
     let billDate = new Date(domo.createdData);
     let formatted = formateDate(billDate);
     date = formatted;
+
+    if(billsByDate != formatted){
+      //add element to billsByDate
+      billsByDate[formatted] = []
+    };
+
+    billsByDate[formatted][domo] = (
+      <tr key={domo._id}>
+        <td>{formatted}</td>
+        <td>{domo.rent}</td>
+        <td>{domo.amount}</td>
+        <td>{domo.paymentTime}</td>
+      </tr>
+    );
+
+    console.log("billsByDate");
+    console.log(billsByDate);
+
     return (
       <tr key={domo._id}>
         <td>{formatted}</td>

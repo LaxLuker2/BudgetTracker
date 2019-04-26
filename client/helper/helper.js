@@ -23,3 +23,5 @@ const sendAjax = (type, action, data, success) => {
     }
   });
 };
+
+//create send pass ajax similar to the one above then send a error function to pass

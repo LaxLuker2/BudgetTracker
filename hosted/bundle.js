@@ -135,12 +135,49 @@ var FinanceList = function FinanceList(props) {
   //find current date of bill
   var date = new Date();
 
+  //array of bills dates
+  var billsByDate = {};
+
   //else use map to create UI for each Finance bill stored
   //every bill will generate a bill tr and add to domoNodes
   var domoNodes = props.domos.map(function (domo) {
     var billDate = new Date(domo.createdData);
     var formatted = formateDate(billDate);
     date = formatted;
+
+    if (billsByDate != formatted) {
+      //add element to billsByDate
+      billsByDate[formatted] = [];
+    };
+
+    billsByDate[formatted][domo] = React.createElement(
+      "tr",
+      { key: domo._id },
+      React.createElement(
+        "td",
+        null,
+        formatted
+      ),
+      React.createElement(
+        "td",
+        null,
+        domo.rent
+      ),
+      React.createElement(
+        "td",
+        null,
+        domo.amount
+      ),
+      React.createElement(
+        "td",
+        null,
+        domo.paymentTime
+      )
+    );
+
+    console.log("billsByDate");
+    console.log(billsByDate);
+
     return React.createElement(
       "tr",
       { key: domo._id },

@@ -101,13 +101,13 @@ const changePass = (request, response) => {
   if (!req.body.username || !req.body.pass || !req.body.pass2) {
     return res
       .status(400)
-      .jsaon({ error: 'Come On Man! All fields are required' });
+      .json({ error: 'Come On Man! All fields are required' });
   }
 
   if (req.body.pass !== req.body.pass2) {
     return res
       .status(400)
-      .jsaon({ error: 'Come On Man! Passwords do not match' });
+      .json({ error: 'Come On Man! Passwords do not match' });
   }
 
   return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
@@ -120,6 +120,8 @@ const changePass = (request, response) => {
     Account.AccountModel.findByUsername(req.body.username, (err, doc) => {
       if (err) {
         console.log(err);
+        // alert("username doesnt exists please signup")
+        return res.status(403).json({ error: 'Username does not exisit please signup!' });
       }
       const docu = doc;
       docu.password = accountData.password;
