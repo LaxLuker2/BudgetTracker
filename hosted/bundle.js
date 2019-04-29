@@ -43,6 +43,25 @@ var RentForm = function RentForm(props) {
       placeholder: "Rent or Salary"
     }),
     React.createElement(
+      "select",
+      {
+        id: "plusMinus",
+        name: "plusMinus",
+        className: "btn btn-secondary dropdown",
+        onchange: "onDropDownClick()"
+      },
+      React.createElement(
+        "option",
+        { value: "+" },
+        "+"
+      ),
+      React.createElement(
+        "option",
+        { value: "-" },
+        "-"
+      )
+    ),
+    React.createElement(
       "label",
       { htmlFor: "amount" },
       "Amount: "
@@ -148,9 +167,17 @@ var FinanceList = function FinanceList(props) {
     if (billsByDate != formatted) {
       //add element to billsByDate
       billsByDate[formatted] = [];
+      // billsByDate[formatted].push(
+      //   <tr key={domo._id}>
+      //     <td>{formatted}</td>
+      //     <td>{domo.rent}</td>
+      //     <td>{domo.amount}</td>
+      //     <td>{domo.paymentTime}</td>
+      //   </tr>
+      // );
     }
 
-    billsByDate[formatted][domo] = React.createElement(
+    billsByDate[formatted].push(React.createElement(
       "tr",
       { key: domo._id },
       React.createElement(
@@ -173,36 +200,100 @@ var FinanceList = function FinanceList(props) {
         null,
         domo.paymentTime
       )
-    );
+    ));
+    // billsByDate[formatted][domo] = (
+    //   <tr key={domo._id}>
+    //     <td>{formatted}</td>
+    //     <td>{domo.rent}</td>
+    //     <td>{domo.amount}</td>
+    //     <td>{domo.paymentTime}</td>
+    //   </tr>
+    // );
 
     console.log("billsByDate");
     console.log(billsByDate);
 
+    // let createdTables;
+
+    // for (var i = 0; i < billsByDate.length; i++) {
+    //   createdTables += (
+    //     <table className="table">
+    //       <thead className="thead-light">
+    //         <tr>
+    //           <th colspan="4">{billsByDate[i]}</th>
+    //         </tr>
+    //       </thead>
+    //       <tbody>{billsByDate[i][i]}</tbody>
+    //     </table>
+    //   );
+    // }
+
+    // console.log(createdTables);
+    // console.log("createdTables");
+
+    // return billsByDate;
     return React.createElement(
-      "tr",
-      { key: domo._id },
+      "table",
+      null,
       React.createElement(
-        "td",
-        null,
-        formatted
-      ),
-      React.createElement(
-        "td",
-        null,
-        domo.rent
-      ),
-      React.createElement(
-        "td",
-        null,
-        domo.amount
-      ),
-      React.createElement(
-        "td",
-        null,
-        domo.paymentTime
+        "tr",
+        { key: domo._id },
+        React.createElement(
+          "td",
+          null,
+          formatted
+        ),
+        React.createElement(
+          "td",
+          null,
+          domo.rent
+        ),
+        React.createElement(
+          "td",
+          null,
+          domo.amount
+        ),
+        React.createElement(
+          "td",
+          null,
+          domo.paymentTime
+        )
       )
     );
   });
+
+  console.log(domoNodes);
+  console.log("domoNodes");
+
+  var createdTables = {};
+
+  for (var i = 0; i < domoNodes.length; i++) {
+    createdTables += React.createElement(
+      "table",
+      { className: "table" },
+      React.createElement(
+        "thead",
+        { className: "thead-light" },
+        React.createElement(
+          "tr",
+          null,
+          React.createElement(
+            "th",
+            { colspan: "4" },
+            billsByDate[i]
+          )
+        )
+      ),
+      React.createElement(
+        "tbody",
+        null,
+        billsByDate[i]
+      )
+    );
+  }
+
+  console.log(createdTables);
+  console.log("createdTables");
 
   // console.log(billDate);
 
@@ -286,7 +377,26 @@ var FinanceList = function FinanceList(props) {
         domoNodes
       )
     )
-  );
+  )
+  // <div>
+  //   <img
+  //     className="mainImg"
+  //     src="/assets/img/brand.png"
+  //     alt="Budget Tracker"
+  //   />
+  //   <table className="table">
+  //     <thead className="thead-dark">
+  //       <tr>
+  //         <th scope="col">Date</th>
+  //         <th scope="col">Type</th>
+  //         <th scope="col">Amount</th>
+  //         <th scope="col">Payment Time</th>
+  //       </tr>
+  //     </thead>
+  //   </table>
+  //   {createdTables}
+  // </div>
+  ;
 };
 
 //using for project 3

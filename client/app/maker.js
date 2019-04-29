@@ -123,9 +123,17 @@ const FinanceList = function(props) {
     if (billsByDate != formatted) {
       //add element to billsByDate
       billsByDate[formatted] = [];
+      // billsByDate[formatted].push(
+      //   <tr key={domo._id}>
+      //     <td>{formatted}</td>
+      //     <td>{domo.rent}</td>
+      //     <td>{domo.amount}</td>
+      //     <td>{domo.paymentTime}</td>
+      //   </tr>
+      // );
     }
 
-    billsByDate[formatted][domo] = (
+    billsByDate[formatted].push(
       <tr key={domo._id}>
         <td>{formatted}</td>
         <td>{domo.rent}</td>
@@ -133,19 +141,59 @@ const FinanceList = function(props) {
         <td>{domo.paymentTime}</td>
       </tr>
     );
+    // billsByDate[formatted][domo] = (
+    //   <tr key={domo._id}>
+    //     <td>{formatted}</td>
+    //     <td>{domo.rent}</td>
+    //     <td>{domo.amount}</td>
+    //     <td>{domo.paymentTime}</td>
+    //   </tr>
+    // );
 
     console.log("billsByDate");
     console.log(billsByDate);
 
-    return (
-      <tr key={domo._id}>
-        <td>{formatted}</td>
-        <td>{domo.rent}</td>
-        <td>{domo.amount}</td>
-        <td>{domo.paymentTime}</td>
-      </tr>
-    );
+    // let createdTables;
+
+    // for (var i = 0; i < billsByDate.length; i++) {
+    //   createdTables += (
+    //     <table className="table">
+    //       <thead className="thead-light">
+    //         <tr>
+    //           <th colspan="4">{billsByDate[i]}</th>
+    //         </tr>
+    //       </thead>
+    //       <tbody>{billsByDate[i][i]}</tbody>
+    //     </table>
+    //   );
+    // }
+
+    // console.log(createdTables);
+    // console.log("createdTables");
+
+    return billsByDate;
   });
+
+  console.log(domoNodes);
+  console.log("domoNodes");
+
+  let createdTables = {};
+
+  for (var i = 0; i < domoNodes.length; i++) {
+    createdTables += (
+      <table className="table">
+        <thead className="thead-light">
+          <tr>
+            <th colspan="4">{billsByDate[i]}</th>
+          </tr>
+        </thead>
+        <tbody>{billsByDate[i]}</tbody>
+      </table>
+    );
+  }
+
+  console.log(createdTables);
+  console.log("createdTables");
 
   // console.log(billDate);
 
@@ -163,6 +211,32 @@ const FinanceList = function(props) {
   //render out a domoList with our domoNodes array
   // return <div className="domoList">{domoNodes}</div>;
   return (
+    // <div>
+    //   <img
+    //     className="mainImg"
+    //     src="/assets/img/brand.png"
+    //     alt="Budget Tracker"
+    //   />
+    //   <table className="table">
+    //     <thead className="thead-dark">
+    //       <tr>
+    //         <th scope="col">Date</th>
+    //         <th scope="col">Type</th>
+    //         <th scope="col">Amount</th>
+    //         <th scope="col">Payment Time</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>{domoNodes}</tbody>
+    //   </table>
+    //   <table className="table">
+    //     <thead className="thead-light">
+    //       <tr>
+    //         <th colspan="4">{date}</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>{domoNodes}</tbody>
+    //   </table>
+    // </div>
     <div>
       <img
         className="mainImg"
@@ -178,16 +252,8 @@ const FinanceList = function(props) {
             <th scope="col">Payment Time</th>
           </tr>
         </thead>
-        <tbody>{domoNodes}</tbody>
       </table>
-      <table className="table">
-        <thead className="thead-light">
-          <tr>
-            <th colspan="4">{date}</th>
-          </tr>
-        </thead>
-        <tbody>{domoNodes}</tbody>
-      </table>
+      {createdTables}
     </div>
   );
 };
