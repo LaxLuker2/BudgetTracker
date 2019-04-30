@@ -114,7 +114,7 @@ const LoginWindow = props => {
 
         <button
           id="changePasswordButton"
-          className="forgotPassword"
+          className="forgotPassword btn btn-primary"
           onClick={() => {
             getChangePass(props.csrf);
           }}

@@ -97,7 +97,7 @@ var LoginWindow = function LoginWindow(props) {
         "button",
         {
           id: "changePasswordButton",
-          className: "forgotPassword",
+          className: "forgotPassword btn btn-primary",
           onClick: function onClick() {
             getChangePass(props.csrf);
           }

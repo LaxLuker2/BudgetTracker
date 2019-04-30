@@ -43,25 +43,6 @@ var RentForm = function RentForm(props) {
       placeholder: "Rent or Salary"
     }),
     React.createElement(
-      "select",
-      {
-        id: "plusMinus",
-        name: "plusMinus",
-        className: "btn btn-secondary dropdown",
-        onchange: "onDropDownClick()"
-      },
-      React.createElement(
-        "option",
-        { value: "+" },
-        "+"
-      ),
-      React.createElement(
-        "option",
-        { value: "-" },
-        "-"
-      )
-    ),
-    React.createElement(
       "label",
       { htmlFor: "amount" },
       "Amount: "
@@ -155,7 +136,7 @@ var FinanceList = function FinanceList(props) {
   var date = new Date();
 
   //array of bills dates
-  var billsByDate = {};
+  var billsByDate = [];
 
   //else use map to create UI for each Finance bill stored
   //every bill will generate a bill tr and add to domoNodes
@@ -164,7 +145,7 @@ var FinanceList = function FinanceList(props) {
     var formatted = formateDate(billDate);
     date = formatted;
 
-    if (billsByDate != formatted) {
+    if (billsByDate[formatted] === undefined) {
       //add element to billsByDate
       billsByDate[formatted] = [];
       // billsByDate[formatted].push(
@@ -177,30 +158,17 @@ var FinanceList = function FinanceList(props) {
       // );
     }
 
-    billsByDate[formatted].push(React.createElement(
-      "tr",
-      { key: domo._id },
-      React.createElement(
-        "td",
-        null,
-        formatted
-      ),
-      React.createElement(
-        "td",
-        null,
-        domo.rent
-      ),
-      React.createElement(
-        "td",
-        null,
-        domo.amount
-      ),
-      React.createElement(
-        "td",
-        null,
-        domo.paymentTime
-      )
-    ));
+    // console.log(formatted);
+    // console.log(billsByDate[formatted]);
+
+    var billObject = {
+      date: formatted,
+      rent: domo.rent,
+      amount: domo.amount,
+      paymentTime: domo.paymentTime
+    };
+
+    billsByDate.push(billObject);
     // billsByDate[formatted][domo] = (
     //   <tr key={domo._id}>
     //     <td>{formatted}</td>
@@ -210,8 +178,10 @@ var FinanceList = function FinanceList(props) {
     //   </tr>
     // );
 
-    console.log("billsByDate");
-    console.log(billsByDate);
+    // console.log("billsByDate");
+    // console.log(billsByDate);
+
+    //let keys = Object.keys(billsByDate);
 
     // let createdTables;
 
@@ -231,69 +201,118 @@ var FinanceList = function FinanceList(props) {
     // console.log(createdTables);
     // console.log("createdTables");
 
-    // return billsByDate;
-    return React.createElement(
-      "table",
-      null,
-      React.createElement(
-        "tr",
-        { key: domo._id },
-        React.createElement(
-          "td",
-          null,
-          formatted
-        ),
-        React.createElement(
-          "td",
-          null,
-          domo.rent
-        ),
-        React.createElement(
-          "td",
-          null,
-          domo.amount
-        ),
-        React.createElement(
-          "td",
-          null,
-          domo.paymentTime
-        )
-      )
-    );
+    // let keys = Object.keys(billsByDate);
+
+    // for (var i = 0; i < keys.length; i++) {
+    //   console.log(billsByDate);
+    //   console.log("billsByDate");
+    //   console.log(billObject);
+    //   console.log("billObject");
+    // }
+
+    return billsByDate;
   });
 
-  console.log(domoNodes);
-  console.log("domoNodes");
+  console.log(domoNodes[0]);
+  console.log("domoNodes[0]");
 
-  var createdTables = {};
+  console.log(domoNodes[0][0]);
+  console.log("domoNodes[0][0]");
+  console.log(domoNodes[0][1]);
+  console.log("domoNodes[0][1]");
 
-  for (var i = 0; i < domoNodes.length; i++) {
-    createdTables += React.createElement(
-      "table",
-      { className: "table" },
-      React.createElement(
-        "thead",
-        { className: "thead-light" },
-        React.createElement(
-          "tr",
-          null,
+  var ct = [];
+
+  for (var i = 0; i < domoNodes[0].length; i++) {
+    if (i + 1 < domoNodes[0].length) {
+      if (domoNodes[0][i][date] == domoNodes[0][i + 1][date]) {
+        ct += React.createElement(
+          "table",
+          { className: "table" },
           React.createElement(
-            "th",
-            { colspan: "4" },
-            billsByDate[i]
+            "thead",
+            { className: "thead-light" },
+            React.createElement(
+              "tr",
+              null,
+              React.createElement(
+                "th",
+                { colspan: "4" },
+                domoNodes[0][i][date]
+              )
+            )
+          ),
+          React.createElement(
+            "tbody",
+            null,
+            React.createElement(
+              "tr",
+              null,
+              React.createElement(
+                "td",
+                null,
+                domoNodes[0][i][date]
+              ),
+              React.createElement(
+                "td",
+                null,
+                domoNodes[0][i][amount]
+              ),
+              React.createElement(
+                "td",
+                null,
+                domoNodes[0][i][paymentTime]
+              )
+            )
           )
-        )
-      ),
-      React.createElement(
-        "tbody",
-        null,
-        billsByDate[i]
-      )
-    );
+        );
+      }
+    }
   }
 
-  console.log(createdTables);
-  console.log("createdTables");
+  console.log("ct");
+  console.log(ct);
+
+  // let createdTables = [];
+  // for (var i = 0; i < domoNodes.length; i++) {
+  //   console.log(billsByDate);
+  //   console.log("billsByDate");
+  //   console.log(billObject);
+  //   console.log("billObject");
+  // }
+
+  // for (var i = 0; i < keys.length; i++) {
+  //   createdTables.push(
+  //     <table className="table">
+  //       <thead className="thead-light">
+  //         <tr>
+  //           <th colspan="4">{keys[i]}</th>
+  //         </tr>
+  //       </thead>
+  //       <tbody>{billObject[i][i]}</tbody>
+  //     </table>
+  //   );
+  // }
+
+  // let keys = Object.keys(domoNodes);
+
+  // let createdTables = [];
+
+  // for (var i = 0; i < keys.length; i++) {
+  //   createdTables.push(
+  //     <table className="table">
+  //       <thead className="thead-light">
+  //         <tr>
+  //           <th colspan="4">{keys[i]}</th>
+  //         </tr>
+  //       </thead>
+  //       <tbody>{keys[i]}</tbody>
+  //     </table>
+  //   );
+  // }
+
+  // console.log(createdTables);
+  // console.log("createdTables");
 
   // console.log(billDate);
 
@@ -310,93 +329,76 @@ var FinanceList = function FinanceList(props) {
 
   //render out a domoList with our domoNodes array
   // return <div className="domoList">{domoNodes}</div>;
-  return React.createElement(
-    "div",
-    null,
-    React.createElement("img", {
-      className: "mainImg",
-      src: "/assets/img/brand.png",
-      alt: "Budget Tracker"
-    }),
+  return (
+    // <div>
+    //   <img
+    //     className="mainImg"
+    //     src="/assets/img/brand.png"
+    //     alt="Budget Tracker"
+    //   />
+    //   <table className="table">
+    //     <thead className="thead-dark">
+    //       <tr>
+    //         <th scope="col">Date</th>
+    //         <th scope="col">Type</th>
+    //         <th scope="col">Amount</th>
+    //         <th scope="col">Payment Time</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>{domoNodes}</tbody>
+    //   </table>
+    //   <table className="table">
+    //     <thead className="thead-light">
+    //       <tr>
+    //         <th colspan="4">{date}</th>
+    //       </tr>
+    //     </thead>
+    //     <tbody>{domoNodes}</tbody>
+    //   </table>
+    // </div>
     React.createElement(
-      "table",
-      { className: "table" },
+      "div",
+      null,
+      React.createElement("img", {
+        className: "mainImg",
+        src: "/assets/img/brand.png",
+        alt: "Budget Tracker"
+      }),
       React.createElement(
-        "thead",
-        { className: "thead-dark" },
+        "table",
+        { className: "table" },
         React.createElement(
-          "tr",
-          null,
+          "thead",
+          { className: "thead-dark" },
           React.createElement(
-            "th",
-            { scope: "col" },
-            "Date"
-          ),
-          React.createElement(
-            "th",
-            { scope: "col" },
-            "Type"
-          ),
-          React.createElement(
-            "th",
-            { scope: "col" },
-            "Amount"
-          ),
-          React.createElement(
-            "th",
-            { scope: "col" },
-            "Payment Time"
+            "tr",
+            null,
+            React.createElement(
+              "th",
+              { scope: "col" },
+              "Date"
+            ),
+            React.createElement(
+              "th",
+              { scope: "col" },
+              "Type"
+            ),
+            React.createElement(
+              "th",
+              { scope: "col" },
+              "Amount"
+            ),
+            React.createElement(
+              "th",
+              { scope: "col" },
+              "Payment Time"
+            )
           )
         )
       ),
-      React.createElement(
-        "tbody",
-        null,
-        domoNodes
-      )
-    ),
-    React.createElement(
-      "table",
-      { className: "table" },
-      React.createElement(
-        "thead",
-        { className: "thead-light" },
-        React.createElement(
-          "tr",
-          null,
-          React.createElement(
-            "th",
-            { colspan: "4" },
-            date
-          )
-        )
-      ),
-      React.createElement(
-        "tbody",
-        null,
-        domoNodes
-      )
+      ct
     )
-  )
-  // <div>
-  //   <img
-  //     className="mainImg"
-  //     src="/assets/img/brand.png"
-  //     alt="Budget Tracker"
-  //   />
-  //   <table className="table">
-  //     <thead className="thead-dark">
-  //       <tr>
-  //         <th scope="col">Date</th>
-  //         <th scope="col">Type</th>
-  //         <th scope="col">Amount</th>
-  //         <th scope="col">Payment Time</th>
-  //       </tr>
-  //     </thead>
-  //   </table>
-  //   {createdTables}
-  // </div>
-  ;
+  );
 };
 
 //using for project 3

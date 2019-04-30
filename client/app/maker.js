@@ -111,7 +111,7 @@ const FinanceList = function(props) {
   let date = new Date();
 
   //array of bills dates
-  let billsByDate = {};
+  let billsByDate = [];
 
   //else use map to create UI for each Finance bill stored
   //every bill will generate a bill tr and add to domoNodes
@@ -120,7 +120,7 @@ const FinanceList = function(props) {
     let formatted = formateDate(billDate);
     date = formatted;
 
-    if (billsByDate != formatted) {
+    if (billsByDate[formatted] === undefined) {
       //add element to billsByDate
       billsByDate[formatted] = [];
       // billsByDate[formatted].push(
@@ -133,14 +133,17 @@ const FinanceList = function(props) {
       // );
     }
 
-    billsByDate[formatted].push(
-      <tr key={domo._id}>
-        <td>{formatted}</td>
-        <td>{domo.rent}</td>
-        <td>{domo.amount}</td>
-        <td>{domo.paymentTime}</td>
-      </tr>
-    );
+    // console.log(formatted);
+    // console.log(billsByDate[formatted]);
+
+    let billObject = {
+      date: formatted,
+      rent: domo.rent,
+      amount: domo.amount,
+      paymentTime: domo.paymentTime
+    };
+
+    billsByDate.push(billObject);
     // billsByDate[formatted][domo] = (
     //   <tr key={domo._id}>
     //     <td>{formatted}</td>
@@ -150,8 +153,10 @@ const FinanceList = function(props) {
     //   </tr>
     // );
 
-    console.log("billsByDate");
-    console.log(billsByDate);
+    // console.log("billsByDate");
+    // console.log(billsByDate);
+
+    //let keys = Object.keys(billsByDate);
 
     // let createdTables;
 
@@ -171,29 +176,94 @@ const FinanceList = function(props) {
     // console.log(createdTables);
     // console.log("createdTables");
 
+    // let keys = Object.keys(billsByDate);
+
+    // for (var i = 0; i < keys.length; i++) {
+    //   console.log(billsByDate);
+    //   console.log("billsByDate");
+    //   console.log(billObject);
+    //   console.log("billObject");
+    // }
+
     return billsByDate;
   });
 
-  console.log(domoNodes);
-  console.log("domoNodes");
+  console.log(domoNodes[0]);
+  console.log("domoNodes[0]");
 
-  let createdTables = {};
+  console.log(domoNodes[0][0]);
+  console.log("domoNodes[0][0]");
+  console.log(domoNodes[0][1]);
+  console.log("domoNodes[0][1]");
 
-  for (var i = 0; i < domoNodes.length; i++) {
-    createdTables += (
-      <table className="table">
-        <thead className="thead-light">
-          <tr>
-            <th colspan="4">{billsByDate[i]}</th>
-          </tr>
-        </thead>
-        <tbody>{billsByDate[i]}</tbody>
-      </table>
-    );
+  let ct = {};
+
+  for (var i = 0; i < domoNodes[0].length; i++) {
+    if (i + 1 < domoNodes[0].length) {
+      if (domoNodes[0][i][date] == domoNodes[0][i + 1][date]) {
+        ct += (
+          <table className="table">
+            <thead className="thead-light">
+              <tr>
+                <th colspan="4">{domoNodes[0][i][date]}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{domoNodes[0][i][date]}</td>
+                <td>{domoNodes[0][i][amount]}</td>
+                <td>{domoNodes[0][i][paymentTime]}</td>
+              </tr>
+            </tbody>
+          </table>
+        );
+      }
+    }
   }
 
-  console.log(createdTables);
-  console.log("createdTables");
+  console.log("ct");
+  console.log(ct);
+
+  // let createdTables = [];
+  // for (var i = 0; i < domoNodes.length; i++) {
+  //   console.log(billsByDate);
+  //   console.log("billsByDate");
+  //   console.log(billObject);
+  //   console.log("billObject");
+  // }
+
+  // for (var i = 0; i < keys.length; i++) {
+  //   createdTables.push(
+  //     <table className="table">
+  //       <thead className="thead-light">
+  //         <tr>
+  //           <th colspan="4">{keys[i]}</th>
+  //         </tr>
+  //       </thead>
+  //       <tbody>{billObject[i][i]}</tbody>
+  //     </table>
+  //   );
+  // }
+
+  // let keys = Object.keys(domoNodes);
+
+  // let createdTables = [];
+
+  // for (var i = 0; i < keys.length; i++) {
+  //   createdTables.push(
+  //     <table className="table">
+  //       <thead className="thead-light">
+  //         <tr>
+  //           <th colspan="4">{keys[i]}</th>
+  //         </tr>
+  //       </thead>
+  //       <tbody>{keys[i]}</tbody>
+  //     </table>
+  //   );
+  // }
+
+  // console.log(createdTables);
+  // console.log("createdTables");
 
   // console.log(billDate);
 
@@ -253,7 +323,7 @@ const FinanceList = function(props) {
           </tr>
         </thead>
       </table>
-      {createdTables}
+      {ct}
     </div>
   );
 };
