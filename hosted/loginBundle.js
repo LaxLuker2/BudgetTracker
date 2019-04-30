@@ -104,7 +104,11 @@ var LoginWindow = function LoginWindow(props) {
         },
         "Forgot Password?"
       ),
-      React.createElement("br", null)
+      React.createElement(
+        "div",
+        { id: "hide" },
+        "some text"
+      )
     )
   );
 };
@@ -184,7 +188,7 @@ var ChangePasswordWindow = function ChangePasswordWindow(props) {
         React.createElement(
           "label",
           { htmlFor: "pass" },
-          "New Password: "
+          "Password: "
         ),
         React.createElement("input", {
           id: "pass",
@@ -195,7 +199,7 @@ var ChangePasswordWindow = function ChangePasswordWindow(props) {
         React.createElement(
           "label",
           { htmlFor: "pass2" },
-          "New Password: "
+          "Password: "
         ),
         React.createElement("input", {
           id: "pass2",

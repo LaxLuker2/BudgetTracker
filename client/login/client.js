@@ -121,7 +121,7 @@ const LoginWindow = props => {
         >
           Forgot Password?
         </button>
-        <br />
+        <div id="hide">some text</div>
       </div>
     </div>
   );
@@ -174,14 +174,14 @@ const ChangePasswordWindow = props => {
           <br />
           <label htmlFor="username">Username: </label>
           <input id="user" type="text" name="username" placeholder="username" />
-          <label htmlFor="pass">New Password: </label>
+          <label htmlFor="pass">Password: </label>
           <input
             id="pass"
             type="password"
             name="pass"
             placeholder="new password"
           />
-          <label htmlFor="pass2">New Password: </label>
+          <label htmlFor="pass2">Password: </label>
           <input
             id="pass2"
             type="password"

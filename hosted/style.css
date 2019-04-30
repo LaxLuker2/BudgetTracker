@@ -6,6 +6,12 @@ body {
   padding: 0;
   overflow-x: hidden; }
 
+.table {
+  margin-bottom: 0px; }
+
+.billsTableWidths {
+  width: 33%; }
+
 #logo {
   height: 40px;
   width: 40;
@@ -424,3 +430,6 @@ section#rent {
 /* content div */
 #appContent {
   display: flex; }
+
+#hide {
+  visibility: hidden; }

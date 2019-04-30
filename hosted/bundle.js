@@ -98,19 +98,58 @@ var WhatIsBTWindow = function WhatIsBTWindow(props) {
       React.createElement(
         "h3",
         { className: "whatIsDomoName" },
-        "Purpose: The purpose of Budget Tracker is for you to enter your information on how your spending your money on bills, or items you pay for like tickets, a tv, snowmobile, etc and know how much you are spending."
+        "The purpose of Budget Tracker is for you to enter in information on how your spending your money on bills, or items you pay for like tickets, a tv, snowmobile, etc. This in turn allows you to know how much you are spending."
       ),
       React.createElement("br", null),
       React.createElement(
         "h3",
         { className: "whatIsDomoAge" },
-        "This allows you to track your financies if you can spend a certain amount of money on an event or tickets or what not today and be financially stable later. Allowing you the consumer to know and track your money that you have worked so hard to earn and plan correctly for the future while living and enjoying life today!"
+        "This allows you to track your finances to be able to budget your money correctly. We all know that if we see something we like we automatically think \u201Coh I have to get this\u201D without thinking of if you will have the money in the long run. You don't know what will come around the corner unexpectedly . So this will allow you to know if you can spend a certain amount of money on an event or tickets or a tv today and be financially stable later. Allowing you the consumer to know and track your money that you have worked so hard to earn and plan correctly for the future while living and enjoying life today!"
       ),
       React.createElement("br", null),
       React.createElement(
         "h3",
         { className: "whatIsDomoSkill" },
         "All your entered information is secured and protected so that only YOU see your information! \xA9BudgetTracker"
+      )
+    )
+  );
+};
+
+var BecomeASponsorWindow = function BecomeASponsorWindow(props) {
+  return React.createElement(
+    "div",
+    { className: "becomeASponsor" },
+    React.createElement("img", { "class": "mainImg", src: "/assets/img/brand.png", alt: "Budget Tracker" }),
+    React.createElement(
+      "section",
+      { id: "content" },
+      React.createElement(
+        "h3",
+        { className: "whatIsDomoName" },
+        "Does Your Company Want To Be Come A Sponsor?"
+      ),
+      React.createElement("br", null),
+      React.createElement(
+        "h3",
+        { className: "whatIsDomoAge" },
+        "Would you like to spread become a sponsor of BudgetTracker and show your company's picture/ad on our website? If So please contact myself at the contact information below."
+      ),
+      React.createElement("br", null),
+      React.createElement(
+        "h3",
+        { className: "whatIsDomoAge" },
+        "Please include your companys name and contact information when you send the text or email!"
+      ),
+      React.createElement("br", null),
+      React.createElement(
+        "h3",
+        { className: "whatIsDomoSkill" },
+        "Email: Moe.BudgetTracker@gmail.com",
+        React.createElement("br", null),
+        "Phone: (347)942-8290",
+        React.createElement("br", null),
+        " \xA9BudgetTracker"
       )
     )
   );
@@ -133,320 +172,132 @@ var FinanceList = function FinanceList(props) {
   }
 
   //find current date of bill
-  var date = new Date();
 
-  //array of bills dates
-  var billsByDate = [];
+  //Object of bills by date. Will contain an array for each day.
+  //Contents of those arrays will be bill objects
+  var billsByDate = {};
 
-  //else use map to create UI for each Finance bill stored
-  //every bill will generate a bill tr and add to domoNodes
-  var domoNodes = props.domos.map(function (domo) {
-    var billDate = new Date(domo.createdData);
+  //Loop through all of the bills we have gotten back
+  for (var i = 0; i < props.domos.length; i++) {
+    var bill = props.domos[i];
+    var billDate = new Date(bill.createdData);
     var formatted = formateDate(billDate);
-    date = formatted;
 
+    //Create the array if it doesn't exist
     if (billsByDate[formatted] === undefined) {
-      //add element to billsByDate
       billsByDate[formatted] = [];
-      // billsByDate[formatted].push(
-      //   <tr key={domo._id}>
-      //     <td>{formatted}</td>
-      //     <td>{domo.rent}</td>
-      //     <td>{domo.amount}</td>
-      //     <td>{domo.paymentTime}</td>
-      //   </tr>
-      // );
     }
 
-    // console.log(formatted);
-    // console.log(billsByDate[formatted]);
-
+    //Create the bill object and add it to the array for the current date
     var billObject = {
       date: formatted,
-      rent: domo.rent,
-      amount: domo.amount,
-      paymentTime: domo.paymentTime
+      rent: bill.rent,
+      amount: bill.amount,
+      paymentTime: bill.paymentTime
     };
 
-    billsByDate.push(billObject);
-    // billsByDate[formatted][domo] = (
-    //   <tr key={domo._id}>
-    //     <td>{formatted}</td>
-    //     <td>{domo.rent}</td>
-    //     <td>{domo.amount}</td>
-    //     <td>{domo.paymentTime}</td>
-    //   </tr>
-    // );
-
-    // console.log("billsByDate");
-    // console.log(billsByDate);
-
-    //let keys = Object.keys(billsByDate);
-
-    // let createdTables;
-
-    // for (var i = 0; i < billsByDate.length; i++) {
-    //   createdTables += (
-    //     <table className="table">
-    //       <thead className="thead-light">
-    //         <tr>
-    //           <th colspan="4">{billsByDate[i]}</th>
-    //         </tr>
-    //       </thead>
-    //       <tbody>{billsByDate[i][i]}</tbody>
-    //     </table>
-    //   );
-    // }
-
-    // console.log(createdTables);
-    // console.log("createdTables");
-
-    // let keys = Object.keys(billsByDate);
-
-    // for (var i = 0; i < keys.length; i++) {
-    //   console.log(billsByDate);
-    //   console.log("billsByDate");
-    //   console.log(billObject);
-    //   console.log("billObject");
-    // }
-
-    return billsByDate;
-  });
-
-  console.log(domoNodes[0]);
-  console.log("domoNodes[0]");
-
-  console.log(domoNodes[0][0]);
-  console.log("domoNodes[0][0]");
-  console.log(domoNodes[0][1]);
-  console.log("domoNodes[0][1]");
-
-  var ct = [];
-
-  for (var i = 0; i < domoNodes[0].length; i++) {
-    if (i + 1 < domoNodes[0].length) {
-      if (domoNodes[0][i][date] == domoNodes[0][i + 1][date]) {
-        ct += React.createElement(
-          "table",
-          { className: "table" },
-          React.createElement(
-            "thead",
-            { className: "thead-light" },
-            React.createElement(
-              "tr",
-              null,
-              React.createElement(
-                "th",
-                { colspan: "4" },
-                domoNodes[0][i][date]
-              )
-            )
-          ),
-          React.createElement(
-            "tbody",
-            null,
-            React.createElement(
-              "tr",
-              null,
-              React.createElement(
-                "td",
-                null,
-                domoNodes[0][i][date]
-              ),
-              React.createElement(
-                "td",
-                null,
-                domoNodes[0][i][amount]
-              ),
-              React.createElement(
-                "td",
-                null,
-                domoNodes[0][i][paymentTime]
-              )
-            )
-          )
-        );
-      }
-    }
+    billsByDate[formatted].push(billObject);
   }
 
-  console.log("ct");
-  console.log(ct);
+  //Create an array to hold our JSX for the table
+  var ct = [];
+  //Get an array of all the keys (days) in billsByDate)
+  var dateKeys = Object.keys(billsByDate);
 
-  // let createdTables = [];
-  // for (var i = 0; i < domoNodes.length; i++) {
-  //   console.log(billsByDate);
-  //   console.log("billsByDate");
-  //   console.log(billObject);
-  //   console.log("billObject");
-  // }
+  //For every date, do the following
+  for (var _i = 0; _i < dateKeys.length; _i++) {
+    //Create a new array to store the jsx html version of each days bills
+    var dateBills = [];
 
-  // for (var i = 0; i < keys.length; i++) {
-  //   createdTables.push(
-  //     <table className="table">
-  //       <thead className="thead-light">
-  //         <tr>
-  //           <th colspan="4">{keys[i]}</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>{billObject[i][i]}</tbody>
-  //     </table>
-  //   );
-  // }
-
-  // let keys = Object.keys(domoNodes);
-
-  // let createdTables = [];
-
-  // for (var i = 0; i < keys.length; i++) {
-  //   createdTables.push(
-  //     <table className="table">
-  //       <thead className="thead-light">
-  //         <tr>
-  //           <th colspan="4">{keys[i]}</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>{keys[i]}</tbody>
-  //     </table>
-  //   );
-  // }
-
-  // console.log(createdTables);
-  // console.log("createdTables");
-
-  // console.log(billDate);
-
-  //check if date create is same as todays date
-  // let isItSameDay = isToday(billDate);
-
-  // console.log(isItSameDay);
-
-  // if (isItSameDay) {
-  //dont want to add header bar with new date so just add the finace info
-  // } else {
-  //add new header to seperate the old data with new
-  // }
-
-  //render out a domoList with our domoNodes array
-  // return <div className="domoList">{domoNodes}</div>;
-  return (
-    // <div>
-    //   <img
-    //     className="mainImg"
-    //     src="/assets/img/brand.png"
-    //     alt="Budget Tracker"
-    //   />
-    //   <table className="table">
-    //     <thead className="thead-dark">
-    //       <tr>
-    //         <th scope="col">Date</th>
-    //         <th scope="col">Type</th>
-    //         <th scope="col">Amount</th>
-    //         <th scope="col">Payment Time</th>
-    //       </tr>
-    //     </thead>
-    //     <tbody>{domoNodes}</tbody>
-    //   </table>
-    //   <table className="table">
-    //     <thead className="thead-light">
-    //       <tr>
-    //         <th colspan="4">{date}</th>
-    //       </tr>
-    //     </thead>
-    //     <tbody>{domoNodes}</tbody>
-    //   </table>
-    // </div>
-    React.createElement(
-      "div",
-      null,
-      React.createElement("img", {
-        className: "mainImg",
-        src: "/assets/img/brand.png",
-        alt: "Budget Tracker"
-      }),
-      React.createElement(
-        "table",
-        { className: "table" },
+    //For each bill (we index into billsByDate by the string key
+    //from date keys to get that days bills))
+    for (var j = 0; j < billsByDate[dateKeys[_i]].length; j++) {
+      //Create a jsx object for each bill and add it to the array
+      dateBills.push(React.createElement(
+        "tr",
+        null,
         React.createElement(
-          "thead",
-          { className: "thead-dark" },
+          "td",
+          { className: "billsTableWidths" },
+          billsByDate[dateKeys[_i]][j].rent
+        ),
+        React.createElement(
+          "td",
+          { className: "billsTableWidths" },
+          billsByDate[dateKeys[_i]][j].amount
+        ),
+        React.createElement(
+          "td",
+          { className: "billsTableWidths" },
+          billsByDate[dateKeys[_i]][j].paymentTime
+        )
+      ));
+    }
+
+    //Once we have jsx for each bill, add them into a table for the day
+    ct.push(React.createElement(
+      "table",
+      { className: "table" },
+      React.createElement(
+        "thead",
+        { className: "thead-light" },
+        React.createElement(
+          "tr",
+          null,
           React.createElement(
-            "tr",
-            null,
-            React.createElement(
-              "th",
-              { scope: "col" },
-              "Date"
-            ),
-            React.createElement(
-              "th",
-              { scope: "col" },
-              "Type"
-            ),
-            React.createElement(
-              "th",
-              { scope: "col" },
-              "Amount"
-            ),
-            React.createElement(
-              "th",
-              { scope: "col" },
-              "Payment Time"
-            )
+            "th",
+            { colSpan: 3 },
+            dateKeys[_i]
           )
         )
       ),
-      ct
-    )
+      React.createElement(
+        "tbody",
+        null,
+        dateBills
+      )
+    ));
+  }
+
+  //Once we have each day as a table, render them all
+  return React.createElement(
+    "div",
+    null,
+    React.createElement("img", {
+      className: "mainImg",
+      src: "/assets/img/brand.png",
+      alt: "Budget Tracker"
+    }),
+    React.createElement(
+      "table",
+      { className: "table" },
+      React.createElement(
+        "thead",
+        { className: "thead-dark" },
+        React.createElement(
+          "tr",
+          null,
+          React.createElement(
+            "th",
+            { scope: "col", className: "billsTableWidths" },
+            "Type"
+          ),
+          React.createElement(
+            "th",
+            { scope: "col", className: "billsTableWidths" },
+            "Amount"
+          ),
+          React.createElement(
+            "th",
+            { scope: "col", className: "billsTableWidths" },
+            "Payment Time"
+          )
+        )
+      )
+    ),
+    ct
   );
 };
-
-//using for project 3
-// let something;
-// billDate = domo.createdData;
-// console.log(billDate);
-
-// //check if date create is same as current date
-// let isItSameDay = isToday(domo.createdData);
-
-// console.log(isItSameDay);
-
-// if (isItSameDay) {
-//   //dont want to add header bar with new date
-//   something = (
-//     <table id="fin-table">
-//       <tr>
-//         <th colspan="2">{formateDate(domo.createdData)}</th>
-//       </tr>
-//       <tr>
-//         <th>Type</th>
-//         <th>Amount</th>
-//       </tr>
-//       <tr key={domo._id}>
-//         <td>{domo.rent}</td>
-//         <td>{domo.amount}</td>
-//         <td>{domo.createdData}</td>
-//       </tr>
-//     </table>
-//   );
-// } else {
-//   //add new header to seperate
-//   something = (
-//     <table id="fin-table2">
-//       <tr>
-//         <th colspan="2">{formateDate(domo.createdData)}</th>
-//       </tr>
-//       <tr>
-//         <th>Type</th>
-//         <th>Amount</th>
-//       </tr>
-//       <tr key={domo._id}>
-//         <td>{domo.rent}</td>
-//         <td>{domo.amount}</td>
-//         <td>{domo.createdData}</td>
-//       </tr>
-//     </table>
-//   );
 
 //grab domos from server and render a Domolist
 //since async we need to render on success
@@ -460,6 +311,10 @@ var createWhatIsBTWindow = function createWhatIsBTWindow(csrf) {
   ReactDOM.render(React.createElement(WhatIsBTWindow, { csrf: csrf }), document.querySelector("#domos"));
 };
 
+var createBecomeASponsorWindow = function createBecomeASponsorWindow(csrf) {
+  ReactDOM.render(React.createElement(BecomeASponsorWindow, { csrf: csrf }), document.querySelector("#domos"));
+};
+
 //setup the render
 var setup = function setup(csrf) {
   //what is Budget Tracker Window
@@ -467,6 +322,13 @@ var setup = function setup(csrf) {
   whatIsBTButton.addEventListener("click", function (e) {
     e.preventDefault();
     createWhatIsBTWindow(csrf);
+    return false;
+  });
+
+  var becomeASponsorButton = document.querySelector("#becomeASponsorButton");
+  becomeASponsorButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    createBecomeASponsorWindow(csrf);
     return false;
   });
 

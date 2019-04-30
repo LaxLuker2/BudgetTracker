@@ -72,23 +72,58 @@ const WhatIsBTWindow = props => {
       <img class="mainImg" src="/assets/img/brand.png" alt="Budget Tracker" />
       <section id="content">
         <h3 className="whatIsDomoName">
-          Purpose: The purpose of Budget Tracker is for you to enter your
-          information on how your spending your money on bills, or items you pay
-          for like tickets, a tv, snowmobile, etc and know how much you are
-          spending.
+          The purpose of Budget Tracker is for you to enter in information on
+          how your spending your money on bills, or items you pay for like
+          tickets, a tv, snowmobile, etc. This in turn allows you to know how
+          much you are spending.
         </h3>
         <br />
         <h3 className="whatIsDomoAge">
-          This allows you to track your financies if you can spend a certain
-          amount of money on an event or tickets or what not today and be
-          financially stable later. Allowing you the consumer to know and track
-          your money that you have worked so hard to earn and plan correctly for
-          the future while living and enjoying life today!
+          This allows you to track your finances to be able to budget your money
+          correctly. We all know that if we see something we like we
+          automatically think “oh I have to get this” without thinking of if you
+          will have the money in the long run. You don't know what will come
+          around the corner unexpectedly . So this will allow you to know if you
+          can spend a certain amount of money on an event or tickets or a tv
+          today and be financially stable later. Allowing you the consumer to
+          know and track your money that you have worked so hard to earn and
+          plan correctly for the future while living and enjoying life today!
         </h3>
         <br />
         <h3 className="whatIsDomoSkill">
           All your entered information is secured and protected so that only YOU
           see your information! &copy;BudgetTracker
+        </h3>
+      </section>
+    </div>
+  );
+};
+
+const BecomeASponsorWindow = props => {
+  return (
+    <div className="becomeASponsor">
+      <img class="mainImg" src="/assets/img/brand.png" alt="Budget Tracker" />
+      <section id="content">
+        <h3 className="whatIsDomoName">
+          Does Your Company Want To Be Come A Sponsor?
+        </h3>
+        <br />
+        <h3 className="whatIsDomoAge">
+          Would you like to spread become a sponsor of BudgetTracker and show
+          your company's picture/ad on our website? If So please contact myself
+          at the contact information below.
+        </h3>
+        <br />
+        <h3 className="whatIsDomoAge">
+          Please include your companys name and contact information when you
+          send the text or email!
+        </h3>
+        <br />
+        <h3 className="whatIsDomoSkill">
+          Email: Moe.BudgetTracker@gmail.com
+          <br />
+          Phone: (347)942-8290
+          <br /> &copy;BudgetTracker
         </h3>
       </section>
     </div>
@@ -108,205 +143,77 @@ const FinanceList = function(props) {
   }
 
   //find current date of bill
-  let date = new Date();
 
-  //array of bills dates
-  let billsByDate = [];
+  //Object of bills by date. Will contain an array for each day.
+  //Contents of those arrays will be bill objects
+  let billsByDate = {};
 
-  //else use map to create UI for each Finance bill stored
-  //every bill will generate a bill tr and add to domoNodes
-  const domoNodes = props.domos.map(function(domo) {
-    let billDate = new Date(domo.createdData);
+  //Loop through all of the bills we have gotten back
+  for (let i = 0; i < props.domos.length; i++) {
+    let bill = props.domos[i];
+    let billDate = new Date(bill.createdData);
     let formatted = formateDate(billDate);
-    date = formatted;
 
+    //Create the array if it doesn't exist
     if (billsByDate[formatted] === undefined) {
-      //add element to billsByDate
       billsByDate[formatted] = [];
-      // billsByDate[formatted].push(
-      //   <tr key={domo._id}>
-      //     <td>{formatted}</td>
-      //     <td>{domo.rent}</td>
-      //     <td>{domo.amount}</td>
-      //     <td>{domo.paymentTime}</td>
-      //   </tr>
-      // );
     }
 
-    // console.log(formatted);
-    // console.log(billsByDate[formatted]);
-
+    //Create the bill object and add it to the array for the current date
     let billObject = {
       date: formatted,
-      rent: domo.rent,
-      amount: domo.amount,
-      paymentTime: domo.paymentTime
+      rent: bill.rent,
+      amount: bill.amount,
+      paymentTime: bill.paymentTime
     };
 
-    billsByDate.push(billObject);
-    // billsByDate[formatted][domo] = (
-    //   <tr key={domo._id}>
-    //     <td>{formatted}</td>
-    //     <td>{domo.rent}</td>
-    //     <td>{domo.amount}</td>
-    //     <td>{domo.paymentTime}</td>
-    //   </tr>
-    // );
-
-    // console.log("billsByDate");
-    // console.log(billsByDate);
-
-    //let keys = Object.keys(billsByDate);
-
-    // let createdTables;
-
-    // for (var i = 0; i < billsByDate.length; i++) {
-    //   createdTables += (
-    //     <table className="table">
-    //       <thead className="thead-light">
-    //         <tr>
-    //           <th colspan="4">{billsByDate[i]}</th>
-    //         </tr>
-    //       </thead>
-    //       <tbody>{billsByDate[i][i]}</tbody>
-    //     </table>
-    //   );
-    // }
-
-    // console.log(createdTables);
-    // console.log("createdTables");
-
-    // let keys = Object.keys(billsByDate);
-
-    // for (var i = 0; i < keys.length; i++) {
-    //   console.log(billsByDate);
-    //   console.log("billsByDate");
-    //   console.log(billObject);
-    //   console.log("billObject");
-    // }
-
-    return billsByDate;
-  });
-
-  console.log(domoNodes[0]);
-  console.log("domoNodes[0]");
-
-  console.log(domoNodes[0][0]);
-  console.log("domoNodes[0][0]");
-  console.log(domoNodes[0][1]);
-  console.log("domoNodes[0][1]");
-
-  let ct = {};
-
-  for (var i = 0; i < domoNodes[0].length; i++) {
-    if (i + 1 < domoNodes[0].length) {
-      if (domoNodes[0][i][date] == domoNodes[0][i + 1][date]) {
-        ct += (
-          <table className="table">
-            <thead className="thead-light">
-              <tr>
-                <th colspan="4">{domoNodes[0][i][date]}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{domoNodes[0][i][date]}</td>
-                <td>{domoNodes[0][i][amount]}</td>
-                <td>{domoNodes[0][i][paymentTime]}</td>
-              </tr>
-            </tbody>
-          </table>
-        );
-      }
-    }
+    billsByDate[formatted].push(billObject);
   }
 
-  console.log("ct");
-  console.log(ct);
+  //Create an array to hold our JSX for the table
+  let ct = [];
+  //Get an array of all the keys (days) in billsByDate)
+  let dateKeys = Object.keys(billsByDate);
 
-  // let createdTables = [];
-  // for (var i = 0; i < domoNodes.length; i++) {
-  //   console.log(billsByDate);
-  //   console.log("billsByDate");
-  //   console.log(billObject);
-  //   console.log("billObject");
-  // }
+  //For every date, do the following
+  for (let i = 0; i < dateKeys.length; i++) {
+    //Create a new array to store the jsx html version of each days bills
+    let dateBills = [];
 
-  // for (var i = 0; i < keys.length; i++) {
-  //   createdTables.push(
-  //     <table className="table">
-  //       <thead className="thead-light">
-  //         <tr>
-  //           <th colspan="4">{keys[i]}</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>{billObject[i][i]}</tbody>
-  //     </table>
-  //   );
-  // }
+    //For each bill (we index into billsByDate by the string key
+    //from date keys to get that days bills))
+    for (let j = 0; j < billsByDate[dateKeys[i]].length; j++) {
+      //Create a jsx object for each bill and add it to the array
+      dateBills.push(
+        <tr>
+          <td className="billsTableWidths">
+            {billsByDate[dateKeys[i]][j].rent}
+          </td>
+          <td className="billsTableWidths">
+            {billsByDate[dateKeys[i]][j].amount}
+          </td>
+          <td className="billsTableWidths">
+            {billsByDate[dateKeys[i]][j].paymentTime}
+          </td>
+        </tr>
+      );
+    }
 
-  // let keys = Object.keys(domoNodes);
+    //Once we have jsx for each bill, add them into a table for the day
+    ct.push(
+      <table className="table">
+        <thead className="thead-light">
+          <tr>
+            <th colSpan={3}>{dateKeys[i]}</th>
+          </tr>
+        </thead>
+        <tbody>{dateBills}</tbody>
+      </table>
+    );
+  }
 
-  // let createdTables = [];
-
-  // for (var i = 0; i < keys.length; i++) {
-  //   createdTables.push(
-  //     <table className="table">
-  //       <thead className="thead-light">
-  //         <tr>
-  //           <th colspan="4">{keys[i]}</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>{keys[i]}</tbody>
-  //     </table>
-  //   );
-  // }
-
-  // console.log(createdTables);
-  // console.log("createdTables");
-
-  // console.log(billDate);
-
-  //check if date create is same as todays date
-  // let isItSameDay = isToday(billDate);
-
-  // console.log(isItSameDay);
-
-  // if (isItSameDay) {
-  //dont want to add header bar with new date so just add the finace info
-  // } else {
-  //add new header to seperate the old data with new
-  // }
-
-  //render out a domoList with our domoNodes array
-  // return <div className="domoList">{domoNodes}</div>;
+  //Once we have each day as a table, render them all
   return (
-    // <div>
-    //   <img
-    //     className="mainImg"
-    //     src="/assets/img/brand.png"
-    //     alt="Budget Tracker"
-    //   />
-    //   <table className="table">
-    //     <thead className="thead-dark">
-    //       <tr>
-    //         <th scope="col">Date</th>
-    //         <th scope="col">Type</th>
-    //         <th scope="col">Amount</th>
-    //         <th scope="col">Payment Time</th>
-    //       </tr>
-    //     </thead>
-    //     <tbody>{domoNodes}</tbody>
-    //   </table>
-    //   <table className="table">
-    //     <thead className="thead-light">
-    //       <tr>
-    //         <th colspan="4">{date}</th>
-    //       </tr>
-    //     </thead>
-    //     <tbody>{domoNodes}</tbody>
-    //   </table>
-    // </div>
     <div>
       <img
         className="mainImg"
@@ -316,10 +223,15 @@ const FinanceList = function(props) {
       <table className="table">
         <thead className="thead-dark">
           <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Type</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Payment Time</th>
+            <th scope="col" className="billsTableWidths">
+              Type
+            </th>
+            <th scope="col" className="billsTableWidths">
+              Amount
+            </th>
+            <th scope="col" className="billsTableWidths">
+              Payment Time
+            </th>
           </tr>
         </thead>
       </table>
@@ -327,53 +239,6 @@ const FinanceList = function(props) {
     </div>
   );
 };
-
-//using for project 3
-// let something;
-// billDate = domo.createdData;
-// console.log(billDate);
-
-// //check if date create is same as current date
-// let isItSameDay = isToday(domo.createdData);
-
-// console.log(isItSameDay);
-
-// if (isItSameDay) {
-//   //dont want to add header bar with new date
-//   something = (
-//     <table id="fin-table">
-//       <tr>
-//         <th colspan="2">{formateDate(domo.createdData)}</th>
-//       </tr>
-//       <tr>
-//         <th>Type</th>
-//         <th>Amount</th>
-//       </tr>
-//       <tr key={domo._id}>
-//         <td>{domo.rent}</td>
-//         <td>{domo.amount}</td>
-//         <td>{domo.createdData}</td>
-//       </tr>
-//     </table>
-//   );
-// } else {
-//   //add new header to seperate
-//   something = (
-//     <table id="fin-table2">
-//       <tr>
-//         <th colspan="2">{formateDate(domo.createdData)}</th>
-//       </tr>
-//       <tr>
-//         <th>Type</th>
-//         <th>Amount</th>
-//       </tr>
-//       <tr key={domo._id}>
-//         <td>{domo.rent}</td>
-//         <td>{domo.amount}</td>
-//         <td>{domo.createdData}</td>
-//       </tr>
-//     </table>
-//   );
 
 //grab domos from server and render a Domolist
 //since async we need to render on success
@@ -393,6 +258,13 @@ const createWhatIsBTWindow = csrf => {
   );
 };
 
+const createBecomeASponsorWindow = csrf => {
+  ReactDOM.render(
+    <BecomeASponsorWindow csrf={csrf} />,
+    document.querySelector("#domos")
+  );
+};
+
 //setup the render
 const setup = function(csrf) {
   //what is Budget Tracker Window
@@ -400,6 +272,13 @@ const setup = function(csrf) {
   whatIsBTButton.addEventListener("click", e => {
     e.preventDefault();
     createWhatIsBTWindow(csrf);
+    return false;
+  });
+
+  const becomeASponsorButton = document.querySelector("#becomeASponsorButton");
+  becomeASponsorButton.addEventListener("click", e => {
+    e.preventDefault();
+    createBecomeASponsorWindow(csrf);
     return false;
   });
 
